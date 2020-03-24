@@ -1,0 +1,5 @@
+
+#!/bin/bash
+
+# Setup the environment for development / running the app locally
+docker-compose -f docker-compose.dev.yml up --detach
