@@ -1,8 +1,8 @@
 defmodule GoogleCrawler.AccountsTest do
   use GoogleCrawler.DataCase
 
-  alias GoogleCrawler.UserFixtures
   alias GoogleCrawler.Accounts
+  alias GoogleCrawler.UserFixtures
 
   describe "users" do
     alias GoogleCrawler.Accounts.User
@@ -25,7 +25,7 @@ defmodule GoogleCrawler.AccountsTest do
     end
 
     test "create_user/1 with valid data creates a user" do
-      user_attrs = UserFixtures.build()
+      user_attrs = UserFixtures.build_attrs()
 
       assert {:ok, %User{} = user} = Accounts.create_user(user_attrs)
       assert user.email == user_attrs.email
@@ -34,14 +34,14 @@ defmodule GoogleCrawler.AccountsTest do
     end
 
     test "create_user/1 with invalid data returns error changeset" do
-      user_attrs = UserFixtures.build(%{email: nil, username: nil, password: nil})
+      user_attrs = UserFixtures.build_attrs(%{email: nil, username: nil, password: nil})
 
       assert {:error, %Ecto.Changeset{}} = Accounts.create_user(user_attrs)
     end
 
     test "update_user/2 with valid data updates the user" do
       user = UserFixtures.create()
-      new_user_attrs = UserFixtures.build()
+      new_user_attrs = UserFixtures.build_attrs()
 
       assert {:ok, %User{} = user} = Accounts.update_user(user, new_user_attrs)
       assert user.email == new_user_attrs.email
@@ -50,7 +50,7 @@ defmodule GoogleCrawler.AccountsTest do
 
     test "update_user/2 with invalid data returns error changeset" do
       user = UserFixtures.create()
-      new_user_attrs = UserFixtures.build(%{email: nil, username: nil, password: nil})
+      new_user_attrs = UserFixtures.build_attrs(%{email: nil, username: nil, password: nil})
 
       assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, new_user_attrs)
       assert user.id == Accounts.get_user!(user.id).id

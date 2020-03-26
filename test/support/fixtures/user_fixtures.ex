@@ -10,12 +10,12 @@ defmodule GoogleCrawler.UserFixtures do
     }
   end
 
-  def build(attrs \\ %{}) do
+  def build_attrs(attrs \\ %{}) do
     Enum.into(attrs, default_attrs())
   end
 
   def create(attrs \\ %{}) do
-    user_attrs = build(attrs)
+    user_attrs = build_attrs(attrs)
     {:ok, user} = Accounts.create_user(user_attrs)
 
     user
