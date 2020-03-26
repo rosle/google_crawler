@@ -16,9 +16,13 @@ defmodule GoogleCrawlerWeb.Router do
   scope "/", GoogleCrawlerWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", SessionController, :new
 
     resources "/registrations", RegistrationController, only: [:new, :create]
+    resources "/sessions", SessionController, only: [:new, :create]
+
+    # TODO: Cleanup this default route
+    resources "/pages", PageController, only: [:index]
   end
 
   # Other scopes may use custom stacks.

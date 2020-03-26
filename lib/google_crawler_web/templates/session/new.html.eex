@@ -1,0 +1,13 @@
+<h2><%= gettext("Welcome to Google Crawler 🌟") %></h2>
+
+<%= form_for @changeset, Routes.session_path(@conn, :create), fn f -> %>
+  <%= label f, :email %>
+  <%= text_input f, :email, required: true %>
+  <%= error_tag f, :email %>
+
+  <%= label f, :password %>
+  <%= password_input f, :password, required: true %>
+  <%= error_tag f, :password %>
+
+  <%= submit gettext("Sign in") %>
+<% end %>
