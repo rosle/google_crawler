@@ -24,12 +24,12 @@ defmodule GoogleCrawler.Accounts.User do
     |> validate_length(:password, min: 6)
     |> unique_constraint(:email)
     |> unique_constraint(:username)
-    |> put_pass_hash
+    |> encrypt_password
   end
 
-  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
+  defp encrypt_password(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
     put_change(changeset, :encrypted_password, Bcrypt.hash_pwd_salt(password))
   end
 
-  defp put_pass_hash(changeset), do: changeset
+  defp encrypt_password(changeset), do: changeset
 end
