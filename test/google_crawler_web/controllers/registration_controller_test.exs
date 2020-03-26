@@ -6,7 +6,7 @@ defmodule GoogleCrawlerWeb.RegistrationControllerTest do
   test "new/2 renders the new template", %{conn: conn} do
     conn = get(conn, Routes.registration_path(conn, :new))
 
-    assert html_response(conn, 200) =~ "Sign Up"
+    assert html_response(conn, 200) =~ "Create Account"
   end
 
   describe "create/2" do
@@ -25,7 +25,7 @@ defmodule GoogleCrawlerWeb.RegistrationControllerTest do
 
       conn = post(conn, Routes.registration_path(conn, :create, user: user_attrs))
 
-      assert html_response(conn, 200) =~ "Sign Up"
+      assert html_response(conn, 200) =~ "Create Account"
     end
   end
 end
