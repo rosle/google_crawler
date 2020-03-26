@@ -1,7 +1,7 @@
 defmodule GoogleCrawlerWeb.RegistrationControllerTest do
   use GoogleCrawlerWeb.ConnCase
 
-  alias GoogleCrawler.UserFixtures
+  alias GoogleCrawler.UserFactory
 
   test "new/2 renders the new template", %{conn: conn} do
     conn = get(conn, Routes.registration_path(conn, :new))
@@ -11,7 +11,7 @@ defmodule GoogleCrawlerWeb.RegistrationControllerTest do
 
   describe "create/2" do
     test "redirects to page index when the data is valid", %{conn: conn}  do
-      user_attrs = UserFixtures.build_attrs()
+      user_attrs = UserFactory.build_attrs()
 
       conn = post(conn, Routes.registration_path(conn, :create, user: user_attrs))
 
@@ -21,7 +21,7 @@ defmodule GoogleCrawlerWeb.RegistrationControllerTest do
     end
 
     test "renders the error when the data is invalid", %{conn: conn}  do
-      user_attrs = UserFixtures.build_attrs(%{email: nil, username: nil, password: nil})
+      user_attrs = UserFactory.build_attrs(%{email: nil, username: nil, password: nil})
 
       conn = post(conn, Routes.registration_path(conn, :create, user: user_attrs))
 

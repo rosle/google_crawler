@@ -1,4 +1,4 @@
-defmodule GoogleCrawler.UserFixtures do
+defmodule GoogleCrawler.UserFactory do
   alias GoogleCrawler.Accounts
 
   def default_attrs do
