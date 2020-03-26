@@ -16,14 +16,21 @@ defmodule GoogleCrawler.Accounts.User do
   @fields ~w(email username encrypted_password password password_confirmation)a
 
   # TODO: Add Password confirmation
-  def changeset(user, attrs) do
+  def changeset(user, attrs \\ %{}) do
     user
     |> cast(attrs, @fields)
     |> validate_required([:email, :username])
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 6)
+    |> validate_confirmation(:password)
     |> unique_constraint(:email)
     |> unique_constraint(:username)
+  end
+
+  def registration_changeset(user, attrs \\ %{}) do
+    user
+    |> changeset(attrs)
+    |> validate_required([:password, :password_confirmation])
     |> encrypt_password
   end
 
