@@ -15,5 +15,5 @@
   <%= password_input f, :password_confirmation %>
   <%= error_tag f, :password_confirmation %>
 
-  <%= submit gettext("Register") %>
+  <%= submit gettext("Sign Up") %>
 <% end %>
