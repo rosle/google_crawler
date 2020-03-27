@@ -11,12 +11,14 @@ defmodule GoogleCrawlerWeb.Plugs.SetUser do
 
     cond do
       user = user_id && Accounts.get_user(user_id) ->
-        assign(conn, :user, user)
-        assign(conn, :user_signed_in?, true)
+        conn
+        |> assign(:user, user)
+        |> assign(:user_signed_in?, true)
 
       true ->
-        assign(conn, :user, nil)
-        assign(conn, :user_signed_in?, false)
+        conn
+        |> assign(:user, nil)
+        |> assign(:user_signed_in?, false)
     end
   end
 end
