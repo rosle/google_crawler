@@ -1,7 +1,7 @@
-defmodule GoogleCrawlerWeb.RequireAuthTest do
+defmodule GoogleCrawlerWeb.EnsureAuthTest do
   use GoogleCrawlerWeb.ConnCase
   use Plug.Test
-  import GoogleCrawlerWeb.Plugs.RequireAuth
+  import GoogleCrawlerWeb.Plugs.EnsureAuth
 
   alias GoogleCrawler.Accounts.User
   alias GoogleCrawler.UserFactory

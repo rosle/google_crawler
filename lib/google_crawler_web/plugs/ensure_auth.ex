@@ -1,4 +1,4 @@
-defmodule GoogleCrawlerWeb.Plugs.RequireAuth do
+defmodule GoogleCrawlerWeb.Plugs.EnsureAuth do
   import Plug.Conn
   import Phoenix.Controller
   import GoogleCrawlerWeb.Gettext
