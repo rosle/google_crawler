@@ -5,7 +5,7 @@ defmodule GoogleCrawlerWeb.RegistrationController do
   alias GoogleCrawler.Accounts.User
 
   def new(conn, _params) do
-    changeset = User.changeset(%User{})
+    changeset = User.registration_changeset(%User{})
 
     render(conn, "new.html", changeset: changeset)
   end
