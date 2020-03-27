@@ -10,7 +10,7 @@ defmodule GoogleCrawlerWeb.SessionController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, params) do
+  def create(conn, %{"user" => params}) do
     case Accounts.authenticate_user(params) do
       {:ok, user} ->
         conn

@@ -7,10 +7,10 @@ defmodule GoogleCrawler.AccountsTest do
   describe "users" do
     alias GoogleCrawler.Accounts.User
 
-    test "get_user!/1 returns the user with given id" do
+    test "get_user/1 returns the user with given id" do
       user = UserFactory.create()
 
-      assert user.id == Accounts.get_user!(user.id).id
+      assert user.id == Accounts.get_user(user.id).id
     end
 
     test "create_user/1 with valid data creates a user" do
