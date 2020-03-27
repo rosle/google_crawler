@@ -1,6 +1,5 @@
 defmodule GoogleCrawlerWeb.PageControllerTest do
   use GoogleCrawlerWeb.ConnCase
-  use Plug.Test
 
   alias GoogleCrawler.UserFactory
 

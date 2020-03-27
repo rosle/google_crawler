@@ -1,6 +1,5 @@
 defmodule GoogleCrawlerWeb.SetCurrentUserTest do
   use GoogleCrawlerWeb.ConnCase
-  use Plug.Test
   import GoogleCrawlerWeb.Plugs.SetCurrentUser
 
   alias GoogleCrawler.UserFactory

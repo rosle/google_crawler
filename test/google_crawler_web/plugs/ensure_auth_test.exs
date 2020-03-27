@@ -1,6 +1,5 @@
 defmodule GoogleCrawlerWeb.EnsureAuthTest do
   use GoogleCrawlerWeb.ConnCase
-  use Plug.Test
   import GoogleCrawlerWeb.Plugs.EnsureAuth
 
   alias GoogleCrawler.UserFactory
