@@ -3,8 +3,8 @@ defmodule GoogleCrawler.UserFactory do
 
   def default_attrs do
     %{
-      email: FakerElixir.Internet.email,
-      username: FakerElixir.Internet.user_name,
+      email: FakerElixir.Internet.email(),
+      username: FakerElixir.Internet.user_name(),
       password: "123456",
       password_confirmation: "123456"
     }

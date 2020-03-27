@@ -7,7 +7,7 @@ defmodule GoogleCrawlerWeb.RegistrationController do
   def new(conn, _params) do
     changeset = User.changeset(%User{})
 
-    render conn, "new.html", changeset: changeset
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -19,7 +19,7 @@ defmodule GoogleCrawlerWeb.RegistrationController do
         |> redirect(to: Routes.page_path(conn, :index))
 
       {:error, changeset} ->
-        render conn, "new.html", changeset: changeset
+        render(conn, "new.html", changeset: changeset)
     end
   end
 end

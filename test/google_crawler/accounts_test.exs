@@ -12,7 +12,7 @@ defmodule GoogleCrawler.AccountsTest do
 
       user_id =
         Accounts.list_users()
-        |> List.first
+        |> List.first()
         |> Map.get(:id)
 
       assert user_id == user.id

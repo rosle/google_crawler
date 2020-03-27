@@ -10,7 +10,7 @@ defmodule GoogleCrawlerWeb.RegistrationControllerTest do
   end
 
   describe "create/2" do
-    test "redirects to page index when the data is valid", %{conn: conn}  do
+    test "redirects to page index when the data is valid", %{conn: conn} do
       user_attrs = UserFactory.build_attrs()
 
       conn = post(conn, Routes.registration_path(conn, :create, user: user_attrs))
@@ -20,7 +20,7 @@ defmodule GoogleCrawlerWeb.RegistrationControllerTest do
       assert get_flash(conn, :info) == "You have signed up successfully!"
     end
 
-    test "renders the error when the data is invalid", %{conn: conn}  do
+    test "renders the error when the data is invalid", %{conn: conn} do
       user_attrs = UserFactory.build_attrs(%{email: nil, username: nil, password: nil})
 
       conn = post(conn, Routes.registration_path(conn, :create, user: user_attrs))
