@@ -10,8 +10,8 @@ defmodule GoogleCrawlerWeb.SessionController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"user" => params}) do
-    case Accounts.authenticate_user(params) do
+  def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
+    case Accounts.auth_user(email, password) do
       {:ok, user} ->
         conn
         |> put_flash(:info, gettext("Welcome back"))
@@ -19,11 +19,9 @@ defmodule GoogleCrawlerWeb.SessionController do
         |> redirect(to: Routes.page_path(conn, :index))
 
       {:error, _reason} ->
-        changeset = User.changeset(%User{}, params)
-
         conn
         |> put_flash(:error, gettext("The email or password is incorrect, please try again"))
-        |> render("new.html", changeset: changeset)
+        |> redirect(to: Routes.session_path(conn, :new))
     end
   end
 end

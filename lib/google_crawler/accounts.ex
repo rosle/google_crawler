@@ -22,7 +22,7 @@ defmodule GoogleCrawler.Accounts do
       nil
 
   """
-  def get_user(id), do: Repo.get!(User, id)
+  def get_user(id), do: Repo.get(User, id)
 
   @doc """
   Get a single user by the specified attributes
@@ -63,19 +63,15 @@ defmodule GoogleCrawler.Accounts do
 
   ## Examples
 
-      iex> authenticate_user(%{"email" => "bob@email.com", "passowrd" => "valid_password"})
+      iex> auth_user("bob@email.com", "valid_password")
       {:ok, $User{}}
 
-      iex> authenticate_user(%{"email" => "bob@email.com", "passowrd" => "invalid_password"})
+      iex> auth_user("bob@email.com", "invalid_password")
       {:error, "invalid password"}
 
-      iex> authenticate_user(%{})
-      {:error, "invalid parameters"}
   """
-  def authenticate_user(%{"email" => email, "password" => password}) do
+  def auth_user(email, password) do
     get_user_by(email: email)
     |> Bcrypt.check_pass(password)
   end
-
-  def authenticate_user(_params), do: {:error, "invalid parameters"}
 end

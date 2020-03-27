@@ -10,7 +10,11 @@ defmodule GoogleCrawler.AccountsTest do
     test "get_user/1 returns the user with given id" do
       user = UserFactory.create()
 
-      assert user.id == Accounts.get_user(user.id).id
+      assert Accounts.get_user(user.id).id == user.id
+    end
+
+    test "get_user/1 returns nil when the user does not exist" do
+      assert Accounts.get_user(1) == nil
     end
 
     test "create_user/1 with valid data creates a user" do
@@ -26,6 +30,20 @@ defmodule GoogleCrawler.AccountsTest do
       user_attrs = UserFactory.build_attrs(%{email: nil, username: nil, password: nil})
 
       assert {:error, %Ecto.Changeset{}} = Accounts.create_user(user_attrs)
+    end
+  end
+
+  describe "user auth" do
+    test "auth_user/1 returns the user when the credentials are valid" do
+      user = UserFactory.create(%{email: "bob@email.com", password: "bob_password", password_confirmation: "bob_password"})
+
+      assert {:ok, user} = Accounts.auth_user("bob@email.com", "bob_password")
+    end
+
+    test "auth_user/1 returns the error message when the credentials are invalid" do
+      user = UserFactory.create(%{email: "bob@email.com", password: "bob_password", password_confirmation: "bob_password"})
+
+      assert {:error, "invalid password"} = Accounts.auth_user("bob@email.com", "wrong_password")
     end
   end
 end
