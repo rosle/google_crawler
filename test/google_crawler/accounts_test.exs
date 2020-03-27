@@ -35,23 +35,21 @@ defmodule GoogleCrawler.AccountsTest do
 
   describe "user auth" do
     test "auth_user/1 returns the user when the credentials are valid" do
-      user =
-        UserFactory.create(%{
-          email: "bob@email.com",
-          password: "bob_password",
-          password_confirmation: "bob_password"
-        })
+      UserFactory.create(%{
+        email: "bob@email.com",
+        password: "bob_password",
+        password_confirmation: "bob_password"
+      })
 
       assert {:ok, user} = Accounts.auth_user("bob@email.com", "bob_password")
     end
 
     test "auth_user/1 returns the error message when the credentials are invalid" do
-      user =
-        UserFactory.create(%{
-          email: "bob@email.com",
-          password: "bob_password",
-          password_confirmation: "bob_password"
-        })
+      UserFactory.create(%{
+        email: "bob@email.com",
+        password: "bob_password",
+        password_confirmation: "bob_password"
+      })
 
       assert {:error, "invalid password"} = Accounts.auth_user("bob@email.com", "wrong_password")
     end

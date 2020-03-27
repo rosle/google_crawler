@@ -1,9 +1,8 @@
-defmodule GoogleCrawlerWeb.SetUserTest do
+defmodule GoogleCrawlerWeb.SetCurrentUserTest do
   use GoogleCrawlerWeb.ConnCase
   use Plug.Test
-  import GoogleCrawlerWeb.Plugs.SetUser
+  import GoogleCrawlerWeb.Plugs.SetCurrentUser
 
-  alias GoogleCrawler.Accounts.User
   alias GoogleCrawler.UserFactory
 
   test "assigns the user with the given id to the conn if the session user id exists" do
@@ -11,12 +10,12 @@ defmodule GoogleCrawlerWeb.SetUserTest do
 
     conn =
       build_conn()
-      |> init_test_session(user_id: user.id)
+      |> init_test_session(current_user_id: user.id)
       |> call(%{})
 
-    assert conn.assigns.user.id == user.id
-    assert conn.assigns.user.email == user.email
-    assert conn.assigns.user.username == user.username
+    assert conn.assigns.current_user.id == user.id
+    assert conn.assigns.current_user.email == user.email
+    assert conn.assigns.current_user.username == user.username
     assert conn.assigns.user_signed_in? == true
   end
 
@@ -26,7 +25,7 @@ defmodule GoogleCrawlerWeb.SetUserTest do
       |> init_test_session(%{})
       |> call(%{})
 
-    assert conn.assigns.user == nil
+    assert conn.assigns.current_user == nil
     assert conn.assigns.user_signed_in? == false
   end
 end

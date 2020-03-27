@@ -3,7 +3,6 @@ defmodule GoogleCrawlerWeb.EnsureAuthTest do
   use Plug.Test
   import GoogleCrawlerWeb.Plugs.EnsureAuth
 
-  alias GoogleCrawler.Accounts.User
   alias GoogleCrawler.UserFactory
 
   test "allows the user to access the page if the user has already logged in" do
@@ -11,8 +10,8 @@ defmodule GoogleCrawlerWeb.EnsureAuthTest do
 
     conn =
       build_conn()
-      |> init_test_session(user_id: user.id)
-      |> bypass_through(Rumbl.Router, :browser)
+      |> init_test_session(current_user_id: user.id)
+      |> assign(:user_signed_in?, true)
       |> call(%{})
 
     refute conn.halted

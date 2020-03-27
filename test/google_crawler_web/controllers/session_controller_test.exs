@@ -1,4 +1,4 @@
-defmodule GoogleCrawlerWeb.RegistrationControllerTest do
+defmodule GoogleCrawlerWeb.SessionControllerTest do
   use GoogleCrawlerWeb.ConnCase
 
   alias GoogleCrawler.UserFactory
@@ -20,7 +20,7 @@ defmodule GoogleCrawlerWeb.RegistrationControllerTest do
 
       assert redirected_to(conn) == Routes.page_path(conn, :index)
       assert get_flash(conn, :info) == "Welcome back"
-      assert get_session(conn, :user_id) == user.id
+      assert get_session(conn, :current_user_id) == user.id
     end
 
     test "renders the error when user credentials are invalid", %{conn: conn} do
