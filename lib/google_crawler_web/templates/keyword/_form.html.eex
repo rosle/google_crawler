@@ -1,0 +1,16 @@
+<section>
+  <h3><%= gettext("Upload your keyword file (.csv)") %></h3>
+  <%= form_for @changeset, Routes.upload_path(@conn, :create), [multipart: true], fn f -> %>
+    <%= label f, :file %>
+    <%= file_input f, :file, required: true, accept: "text/csv" %>
+    <%= error_tag f, :file %>
+
+    <%= submit gettext("Upload") %>
+  <% end %>
+</section>
+<hr>
+<section>
+  <h3><%= gettext("Keywords") %></h3>
+  <p><%= gettext("You don't have any keywords.") %></p>
+</section>
+

@@ -8,7 +8,7 @@ defmodule GoogleCrawler.Search.Keyword do
     timestamps()
   end
 
-  def changeset(keyword, attrs) do
+  def changeset(keyword, attrs \\ %{}) do
     keyword
     |> cast(attrs, [:keyword])
     |> validate_required([:keyword])

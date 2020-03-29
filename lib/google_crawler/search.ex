@@ -56,6 +56,5 @@ defmodule GoogleCrawler.Search do
   end
 
   def parse_keywords_from_csv do
-
   end
 end

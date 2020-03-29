@@ -7,6 +7,5 @@ defmodule GoogleCrawler.Repo.Migrations.CreateKeywords do
 
       timestamps()
     end
-
   end
 end
