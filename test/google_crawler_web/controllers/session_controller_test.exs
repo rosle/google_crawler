@@ -18,7 +18,7 @@ defmodule GoogleCrawlerWeb.SessionControllerTest do
       |> put_session(:current_user_id, user.id)
       |> get(Routes.session_path(conn, :new))
 
-    assert redirected_to(conn) == Routes.page_path(conn, :index)
+    assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
   end
 
   describe "create/2" do
@@ -30,7 +30,7 @@ defmodule GoogleCrawlerWeb.SessionControllerTest do
           user: %{email: user.email, password: user.password}
         )
 
-      assert redirected_to(conn) == Routes.page_path(conn, :index)
+      assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
       assert get_flash(conn, :info) == "Welcome back"
       assert get_session(conn, :current_user_id) == user.id
     end

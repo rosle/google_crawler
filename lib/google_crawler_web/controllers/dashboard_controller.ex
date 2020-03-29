@@ -1,4 +1,4 @@
-defmodule GoogleCrawlerWeb.PageController do
+defmodule GoogleCrawlerWeb.DashboardController do
   use GoogleCrawlerWeb, :controller
 
   def index(conn, _params) do

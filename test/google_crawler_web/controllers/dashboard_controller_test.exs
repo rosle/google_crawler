@@ -1,4 +1,4 @@
-defmodule GoogleCrawlerWeb.PageControllerTest do
+defmodule GoogleCrawlerWeb.DashboardControllerTest do
   use GoogleCrawlerWeb.ConnCase
 
   alias GoogleCrawler.UserFactory
@@ -10,7 +10,7 @@ defmodule GoogleCrawlerWeb.PageControllerTest do
       conn
       |> init_test_session(%{})
       |> put_session(:current_user_id, user.id)
-      |> get(Routes.page_path(conn, :index))
+      |> get(Routes.dashboard_path(conn, :index))
 
     assert html_response(conn, 200) =~ "Welcome to Phoenix!"
   end
@@ -19,7 +19,7 @@ defmodule GoogleCrawlerWeb.PageControllerTest do
     conn =
       conn
       |> init_test_session(%{})
-      |> get(Routes.page_path(conn, :index))
+      |> get(Routes.dashboard_path(conn, :index))
 
     assert redirected_to(conn) == Routes.session_path(conn, :new)
   end

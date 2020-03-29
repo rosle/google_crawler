@@ -17,7 +17,7 @@ defmodule GoogleCrawlerWeb.Plugs.SkipAfterAuth do
     if conn.assigns.user_signed_in? do
       conn
       |> put_flash(:info, gettext("You are already signed in."))
-      |> redirect(to: Routes.page_path(conn, :index))
+      |> redirect(to: Routes.dashboard_path(conn, :index))
       |> halt()
     else
       conn

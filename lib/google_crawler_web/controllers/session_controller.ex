@@ -16,7 +16,7 @@ defmodule GoogleCrawlerWeb.SessionController do
         conn
         |> put_flash(:info, gettext("Welcome back"))
         |> put_session(:current_user_id, user.id)
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> redirect(to: Routes.dashboard_path(conn, :index))
 
       {:error, _reason} ->
         conn

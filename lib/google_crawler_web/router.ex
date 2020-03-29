@@ -28,8 +28,7 @@ defmodule GoogleCrawlerWeb.Router do
 
     resources "/sessions", SessionController, only: [:delete]
 
-    # TODO: Cleanup this default route
-    get "/", PageController, :index
+    get "/", DashboardController, :index
   end
 
   # Other scopes may use custom stacks.

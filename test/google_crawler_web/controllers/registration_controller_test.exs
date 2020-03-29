@@ -27,7 +27,7 @@ defmodule GoogleCrawlerWeb.RegistrationControllerTest do
 
       conn = post(conn, Routes.registration_path(conn, :create, user: user_attrs))
 
-      assert redirected_to(conn) == Routes.page_path(conn, :index)
+      assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
       assert get_flash(conn, :info) == "You have signed up successfully!"
     end
 
