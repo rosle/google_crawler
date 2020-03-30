@@ -11,18 +11,31 @@ defmodule GoogleCrawler.Accounts do
   @doc """
   Gets a single user.
 
-  Raises `Ecto.NoResultsError` if the User does not exist.
+  Returns nil if the user does not exist.
 
   ## Examples
 
-      iex> get_user!(123)
+      iex> get_user(123)
       %User{}
 
-      iex> get_user!(456)
-      ** (Ecto.NoResultsError)
+      iex> get_user(456)
+      nil
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user(id), do: Repo.get(User, id)
+
+  @doc """
+  Get a single user by the specified attributes
+
+  ## Examples
+
+    iex> get_user_by(123)
+      %User{}
+    iex> get_user_by(456)
+      nil
+
+  """
+  def get_user_by(attrs), do: Repo.get_by(User, attrs)
 
   @doc """
   Creates a user.
@@ -40,5 +53,25 @@ defmodule GoogleCrawler.Accounts do
     %User{}
     |> User.registration_changeset(attrs)
     |> Repo.insert()
+  end
+
+  @doc """
+  Authenticate the user with email and password
+  Bcrypt checkpass returns the reason when the auth is failed, which could be
+  - invalid user-identifier
+  - invalid password
+
+  ## Examples
+
+      iex> auth_user("bob@email.com", "valid_password")
+      {:ok, $User{}}
+
+      iex> auth_user("bob@email.com", "invalid_password")
+      {:error, "invalid password"}
+
+  """
+  def auth_user(email, password) do
+    get_user_by(email: email)
+    |> Bcrypt.check_pass(password)
   end
 end
