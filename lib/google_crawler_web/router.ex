@@ -14,16 +14,20 @@ defmodule GoogleCrawlerWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # Authentication routes
   scope "/", GoogleCrawlerWeb do
-    pipe_through :browser
-
-    get "/", SessionController, :new
+    pipe_through [:browser, GoogleCrawlerWeb.Plugs.SkipAfterAuth]
 
     resources "/registrations", RegistrationController, only: [:new, :create]
     resources "/sessions", SessionController, only: [:new, :create]
+  end
+
+  # Protected routes
+  scope "/", GoogleCrawlerWeb do
+    pipe_through [:browser, GoogleCrawlerWeb.Plugs.EnsureAuth]
 
     # TODO: Cleanup this default route
-    resources "/pages", PageController, only: [:index]
+    get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.

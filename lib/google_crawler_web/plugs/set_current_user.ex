@@ -1,4 +1,8 @@
 defmodule GoogleCrawlerWeb.Plugs.SetCurrentUser do
+  @moduledoc """
+    Set the current user to the connection if the user is authenticated.
+  """
+
   import Plug.Conn
 
   alias GoogleCrawler.Accounts

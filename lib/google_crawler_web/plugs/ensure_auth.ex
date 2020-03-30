@@ -1,4 +1,8 @@
 defmodule GoogleCrawlerWeb.Plugs.EnsureAuth do
+  @moduledoc """
+    To ensure the user is authenticated before visit the route.
+  """
+
   import Plug.Conn
   import Phoenix.Controller
   import GoogleCrawlerWeb.Gettext

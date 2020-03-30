@@ -9,6 +9,18 @@ defmodule GoogleCrawlerWeb.RegistrationControllerTest do
     assert html_response(conn, 200) =~ "Create Account"
   end
 
+  test "new/2 redirects to the pages controller if the user has already logged in", %{conn: conn} do
+    user = UserFactory.create()
+
+    conn =
+      conn
+      |> init_test_session(%{})
+      |> put_session(:current_user_id, user.id)
+      |> get(Routes.registration_path(conn, :new))
+
+    assert redirected_to(conn) == Routes.page_path(conn, :index)
+  end
+
   describe "create/2" do
     test "redirects to page index when the data is valid", %{conn: conn} do
       user_attrs = UserFactory.build_attrs()
