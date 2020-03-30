@@ -7,6 +7,7 @@ defmodule GoogleCrawler.Search do
   alias GoogleCrawler.Repo
 
   alias GoogleCrawler.Search.Keyword
+  alias GoogleCrawler.Search.KeywordFile
 
   @doc """
   Returns the list of keywords.
@@ -55,6 +56,7 @@ defmodule GoogleCrawler.Search do
     |> Repo.insert()
   end
 
-  def parse_keywords_from_csv do
+  def parse_keywords_from_file!(file_path, content_type) do
+    KeywordFile.parse!(file_path, content_type)
   end
 end
