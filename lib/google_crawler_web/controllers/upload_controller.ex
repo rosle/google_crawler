@@ -35,8 +35,11 @@ defmodule GoogleCrawlerWeb.UploadController do
 
     if length(failed_keywords) > 0 do
       conn
-      |> put_flash(:error,
-        gettext("Some keywords could not be created: %{failed_keywords}", failed_keywords: Enum.join(failed_keywords, ","))
+      |> put_flash(
+        :error,
+        gettext("Some keywords could not be created: %{failed_keywords}",
+          failed_keywords: Enum.join(failed_keywords, ",")
+        )
       )
     else
       conn
