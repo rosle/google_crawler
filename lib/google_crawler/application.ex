@@ -11,9 +11,9 @@ defmodule GoogleCrawler.Application do
       # Start the Ecto repository
       GoogleCrawler.Repo,
       # Start the endpoint when the application starts
-      GoogleCrawlerWeb.Endpoint
-      # Starts a worker by calling: GoogleCrawler.Worker.start_link(arg)
-      # {GoogleCrawler.Worker, arg},
+      GoogleCrawlerWeb.Endpoint,
+      # The supervisor for crawler background job
+      {Task.Supervisor, name: GoogleCrawler.TaskSupervisor}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
