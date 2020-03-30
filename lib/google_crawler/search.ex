@@ -43,16 +43,17 @@ defmodule GoogleCrawler.Search do
 
   ## Examples
 
-      iex> create_keyword(%{field: value})
+      iex> create_keyword(%User{}, %{field: value})
       {:ok, %Keyword{}}
 
-      iex> create_keyword(%{field: bad_value})
+      iex> create_keyword(%User{}, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_keyword(attrs \\ %{}) do
+  def create_keyword(attrs \\ %{}, user) do
     %Keyword{}
     |> Keyword.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:user, user)
     |> Repo.insert()
   end
 

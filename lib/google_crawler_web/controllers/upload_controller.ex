@@ -5,6 +5,7 @@ defmodule GoogleCrawlerWeb.UploadController do
   alias GoogleCrawler.Search
   alias GoogleCrawler.Search.KeywordFile
 
+  @spec create(atom | %{__struct__: atom}, map) :: Plug.Conn.t()
   def create(conn, %{"keyword_file" => keyword_file}) do
     changeset = KeywordFile.changeset(%KeywordFile{}, keyword_file)
 
@@ -12,7 +13,7 @@ defmodule GoogleCrawlerWeb.UploadController do
       file = get_change(changeset, :file, nil)
 
       Search.parse_keywords_from_file!(file.path, file.content_type)
-      |> create_and_trigger_google_search
+      |> create_and_trigger_google_search(conn)
       |> put_error_flash_for_failed_keywords(conn)
       |> redirect(to: Routes.dashboard_path(conn, :index))
     else
@@ -23,11 +24,11 @@ defmodule GoogleCrawlerWeb.UploadController do
   end
 
   # TODO: Trigger the scrapper background worker
-  defp create_and_trigger_google_search(csv_result) do
+  defp create_and_trigger_google_search(csv_result, conn) do
     csv_result
     |> Stream.map(fn keyword_row -> List.first(keyword_row) end)
     |> Stream.map(fn keyword -> %{keyword: keyword} end)
-    |> Enum.map(&Search.create_keyword/1)
+    |> Enum.map(&Search.create_keyword(&1, conn.assigns.current_user))
   end
 
   defp put_error_flash_for_failed_keywords(create_result, conn) do

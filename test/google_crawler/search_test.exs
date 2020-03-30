@@ -4,6 +4,7 @@ defmodule GoogleCrawler.SearchTest do
   alias GoogleCrawler.Search
   alias GoogleCrawler.Search.Keyword
   alias GoogleCrawler.KeywordFactory
+  alias GoogleCrawler.UserFactory
 
   describe "keywords" do
     test "list_keywords/0 returns all keywords" do
@@ -19,16 +20,18 @@ defmodule GoogleCrawler.SearchTest do
     end
 
     test "create_keyword/1 with valid data creates a keyword" do
+      user = UserFactory.create()
       keyword_attrs = KeywordFactory.build_attrs(%{keyword: "elixir"})
 
-      assert {:ok, %Keyword{} = keyword} = Search.create_keyword(keyword_attrs)
+      assert {:ok, %Keyword{} = keyword} = Search.create_keyword(keyword_attrs, user)
       assert keyword.keyword == "elixir"
     end
 
     test "create_keyword/1 with invalid data returns error changeset" do
+      user = UserFactory.create()
       keyword_attrs = KeywordFactory.build_attrs(%{keyword: ""})
 
-      assert {:error, %Ecto.Changeset{}} = Search.create_keyword(keyword_attrs)
+      assert {:error, %Ecto.Changeset{}} = Search.create_keyword(keyword_attrs, user)
     end
   end
 

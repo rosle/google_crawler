@@ -5,6 +5,8 @@ defmodule GoogleCrawler.Search.Keyword do
   schema "keywords" do
     field :keyword, :string
 
+    belongs_to :user, GoogleCrawler.Accounts.User
+
     timestamps()
   end
 
