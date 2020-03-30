@@ -37,4 +37,25 @@ defmodule GoogleCrawler.SearchTest do
       assert {:error, %Ecto.Changeset{}} = Search.create_keyword(@invalid_attrs)
     end
   end
+
+  describe "keyword file" do
+    test "parse_keywords_from_file!/2 returns the stream" do
+      csv_stream =
+        Search.parse_keywords_from_file!(
+          "test/fixtures/keyword_files/valid_keyword.csv",
+          "text/csv"
+        )
+
+      assert Enum.to_list(csv_stream) == [["elixir"], ["ruby"], ["javascript"]]
+    end
+
+    test "parse_keywords_from_file!/2 raises an exception when the file type is not supported" do
+      assert_raise GoogleCrawler.Errors.FileNotSupportedError, fn ->
+        Search.parse_keywords_from_file!(
+          "test/fixtures/keyword_files/unsupported_keyword.txt",
+          "text/plain"
+        )
+      end
+    end
+  end
 end

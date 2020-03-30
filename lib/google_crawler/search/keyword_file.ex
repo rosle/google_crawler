@@ -22,7 +22,8 @@ defmodule GoogleCrawler.Search.KeywordFile do
   end
 
   def parse!(_file_path, _unexpected_content_type) do
-    raise "File with this extenstion is not supported"
+    raise GoogleCrawler.Errors.FileNotSupportedError,
+      message: "File with this extenstion is not supported"
   end
 
   defp validate_file_ext(changeset) do
