@@ -13,9 +13,7 @@ defmodule GoogleCrawlerWeb.RegistrationControllerTest do
     user = UserFactory.create()
 
     conn =
-      conn
-      |> init_test_session(%{})
-      |> put_session(:current_user_id, user.id)
+      build_authenticated_conn(user)
       |> get(Routes.registration_path(conn, :new))
 
     assert redirected_to(conn) == Routes.dashboard_path(conn, :index)

@@ -26,6 +26,12 @@ defmodule GoogleCrawlerWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint GoogleCrawlerWeb.Endpoint
+
+      def build_authenticated_conn(user) do
+        build_conn()
+        |> Plug.Test.init_test_session(current_user_id: user.id)
+        |> assign(:user_signed_in?, true)
+      end
     end
   end
 

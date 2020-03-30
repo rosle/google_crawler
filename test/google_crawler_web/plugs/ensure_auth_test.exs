@@ -8,9 +8,7 @@ defmodule GoogleCrawlerWeb.EnsureAuthTest do
     user = UserFactory.create()
 
     conn =
-      build_conn()
-      |> init_test_session(current_user_id: user.id)
-      |> assign(:user_signed_in?, true)
+      build_authenticated_conn(user)
       |> call(%{})
 
     refute conn.halted
