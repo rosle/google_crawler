@@ -21,9 +21,9 @@ defmodule GoogleCrawler.Search.KeywordFile do
     |> CSV.decode!()
   end
 
-  def parse!(_file_path, _unexpected_content_type) do
+  def parse!(_file_path, _unexpected_mime_type) do
     raise GoogleCrawler.Errors.FileNotSupportedError,
-      message: "File with this extenstion is not supported"
+      message: "File with this extension is not supported"
   end
 
   defp validate_file_ext(changeset) do

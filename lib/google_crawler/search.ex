@@ -59,7 +59,7 @@ defmodule GoogleCrawler.Search do
   @doc """
   Parses the keyword from the given file.
   Returns the stream for each line in the csv file as [line_result].
-  Raise an exception if the file content type is not supported or the file parsing is failed.
+  Raise an exception if the file mime type is not supported or the file parsing is failed.
 
   ### Examples
 
@@ -67,7 +67,7 @@ defmodule GoogleCrawler.Search do
       [ok: ["hotels"], ok: ["restaurants"]]
 
   """
-  def parse_keywords_from_file!(file_path, content_type) do
-    KeywordFile.parse!(file_path, content_type)
+  def parse_keywords_from_file!(file_path, mime_type) do
+    KeywordFile.parse!(file_path, mime_type)
   end
 end

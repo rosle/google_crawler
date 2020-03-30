@@ -14,4 +14,3 @@
   <h3><%= gettext("Keywords") %></h3>
   <p><%= gettext("You don't have any keywords.") %></p>
 </section>
-
