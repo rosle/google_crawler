@@ -18,7 +18,7 @@ defmodule GoogleCrawler.Search.KeywordFile do
   def parse!(file_path, "text/csv") do
     file_path
     |> File.stream!()
-    |> CSV.decode()
+    |> CSV.decode!()
   end
 
   def parse!(_file_path, _unexpected_content_type) do

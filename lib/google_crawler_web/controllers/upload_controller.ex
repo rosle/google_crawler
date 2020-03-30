@@ -10,7 +10,10 @@ defmodule GoogleCrawlerWeb.UploadController do
 
     if changeset.valid? do
       file = get_change(changeset, :file, nil)
-      Search.parse_keywords_from_file!(file.path, file.content_type)
+      result = Search.parse_keywords_from_file!(file.path, file.content_type)
+
+      # TODO: Save these keywords and triggers the task to google search for each keyword
+      text(conn, result |> Enum.map(fn {:ok, [keyword]} -> keyword end) |> Enum.join(", "))
     else
       conn
       |> put_flash(:error, gettext("Invalid file, please select again."))

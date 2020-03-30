@@ -56,6 +56,17 @@ defmodule GoogleCrawler.Search do
     |> Repo.insert()
   end
 
+  @doc """
+  Parses the keyword from the given file.
+  Returns the stream for each line in the csv file as {ok: result}.
+  Raise an exception if the file content type is not supported or the file parsing is failed.
+
+  ### Examples
+
+      iex > parse_keywords_from_file!("var/folder/abcdef", "text/csv") |> Enum.to_list
+      [ok: ["hotels"], ok: ["restaurants"]]
+
+  """
   def parse_keywords_from_file!(file_path, content_type) do
     KeywordFile.parse!(file_path, content_type)
   end
