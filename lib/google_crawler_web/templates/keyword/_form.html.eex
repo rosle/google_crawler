@@ -3,7 +3,7 @@
   <p><%= gettext("📝 Please put one keyword per line") %></p>
   <%= form_for @changeset, Routes.upload_path(@conn, :create), [multipart: true], fn f -> %>
     <%= label f, :file %>
-    <%= file_input f, :file, required: true, accept: "text/csv" %>
+    <%= file_input f, :file, required: true %>
     <%= error_tag f, :file %>
 
     <%= submit gettext("Upload") %>

@@ -9,7 +9,7 @@ defmodule GoogleCrawlerWeb.SessionControllerTest do
     assert html_response(conn, 200) =~ "Sign in"
   end
 
-  test "new/2 redirects to the page controller if the user has already logged in", %{conn: conn} do
+  test "new/2 redirects to the user dashboard if the user has already logged in", %{conn: conn} do
     user = UserFactory.create()
 
     conn =
@@ -19,7 +19,7 @@ defmodule GoogleCrawlerWeb.SessionControllerTest do
     assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
   end
 
-  test "create/2 redirects to page controller when user credentials are valid", %{conn: conn} do
+  test "create/2 redirects to user dashboard when user credentials are valid", %{conn: conn} do
     user = UserFactory.create()
 
     conn =
@@ -44,7 +44,7 @@ defmodule GoogleCrawlerWeb.SessionControllerTest do
     assert get_flash(conn, :error) == "The email or password is incorrect, please try again"
   end
 
-  test "delete/2 clears the user session and redirects to the log in page", %{conn: conn} do
+  test "delete/2 clears the user session and redirects to the login page", %{conn: conn} do
     user = UserFactory.create()
 
     conn =

@@ -58,7 +58,7 @@ defmodule GoogleCrawler.Search do
 
   @doc """
   Parses the keyword from the given file.
-  Returns the stream for each line in the csv file as {ok: result}.
+  Returns the stream for each line in the csv file as [line_result].
   Raise an exception if the file content type is not supported or the file parsing is failed.
 
   ### Examples
