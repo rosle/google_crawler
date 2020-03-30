@@ -19,12 +19,14 @@ defmodule GoogleCrawlerWeb.Router do
     pipe_through [:browser, GoogleCrawlerWeb.Plugs.SkipAfterAuth]
 
     resources "/registrations", RegistrationController, only: [:new, :create]
-    resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/sessions", SessionController, only: [:new, :create]
   end
 
   # Protected routes
   scope "/", GoogleCrawlerWeb do
     pipe_through [:browser, GoogleCrawlerWeb.Plugs.EnsureAuth]
+
+    resources "/sessions", SessionController, only: [:delete]
 
     # TODO: Cleanup this default route
     get "/", PageController, :index
