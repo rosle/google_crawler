@@ -1,8 +1,13 @@
 defmodule GoogleCrawlerWeb.LayoutViewTest do
   use GoogleCrawlerWeb.ConnCase, async: true
 
-  # When testing helpers, you may want to import Phoenix.HTML and
-  # use functions such as safe_to_string() to convert the helper
-  # result into an HTML string.
-  # import Phoenix.HTML
+  alias GoogleCrawlerWeb.LayoutView
+
+  test "body_class returns current controller and action as a class name", %{conn: conn} do
+    conn = get(build_conn(), Routes.registration_path(conn, :new))
+
+    body_class_name = LayoutView.body_class(conn)
+
+    assert body_class_name == "registration new"
+  end
 end

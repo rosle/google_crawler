@@ -10,4 +10,6 @@
   <%= error_tag f, :password %>
 
   <%= submit gettext("Sign in") %>
+  or
+  <%= link gettext("Register"), to: Routes.registration_path(@conn, :new) %>
 <% end %>

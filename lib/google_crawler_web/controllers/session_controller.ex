@@ -24,4 +24,11 @@ defmodule GoogleCrawlerWeb.SessionController do
         |> redirect(to: Routes.session_path(conn, :new))
     end
   end
+
+  def delete(conn, _params) do
+    conn
+    |> clear_session
+    |> put_flash(:info, gettext("You've been signed out successfully"))
+    |> redirect(to: Routes.session_path(conn, :new))
+  end
 end

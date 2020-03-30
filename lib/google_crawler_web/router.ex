@@ -26,6 +26,8 @@ defmodule GoogleCrawlerWeb.Router do
   scope "/", GoogleCrawlerWeb do
     pipe_through [:browser, GoogleCrawlerWeb.Plugs.EnsureAuth]
 
+    resources "/sessions", SessionController, only: [:delete]
+
     # TODO: Cleanup this default route
     get "/", PageController, :index
   end
