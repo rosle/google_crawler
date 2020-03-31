@@ -7,10 +7,15 @@ defmodule GoogleCrawler.SearchTest do
   alias GoogleCrawler.UserFactory
 
   describe "keywords" do
-    test "list_keywords/0 returns all keywords" do
-      keyword = KeywordFactory.create()
+    test "list_user_keywords/0 returns all keywords" do
+      user1 = UserFactory.create()
+      user2 = UserFactory.create()
+      keyword1 = KeywordFactory.create(%{}, user1)
+      keyword2 = KeywordFactory.create(%{}, user2)
 
-      assert Search.list_keywords() |> Enum.map(&Map.get(&1, :keyword)) == [keyword.keyword]
+      user_keywords = Search.list_user_keywords(user1)
+
+      assert user_keywords |> Enum.map(&Map.get(&1, :keyword)) == [keyword1.keyword]
     end
 
     test "get_keyword/1 returns the keyword with given id" do

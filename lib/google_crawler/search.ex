@@ -10,16 +10,18 @@ defmodule GoogleCrawler.Search do
   alias GoogleCrawler.Search.KeywordFile
 
   @doc """
-  Returns the list of keywords.
+  Returns the list of keywords belongs to the given user.
 
   ## Examples
 
-      iex> list_keywords()
+      iex> list_user_keywords(user)
       [%Keyword{}, ...]
 
   """
-  def list_keywords do
-    Repo.all(Keyword)
+  def list_user_keywords(user) do
+    Keyword
+    |> where(user_id: ^user.id)
+    |> Repo.all()
   end
 
   @doc """
