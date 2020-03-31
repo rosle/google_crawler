@@ -53,9 +53,8 @@ defmodule GoogleCrawler.Search do
 
   """
   def create_keyword(attrs \\ %{}, user) do
-    %Keyword{}
+    Ecto.build_assoc(user, :keywords)
     |> Keyword.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:user, user)
     |> Repo.insert()
   end
 

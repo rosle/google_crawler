@@ -11,7 +11,7 @@ defmodule GoogleCrawler.SearchTest do
       user1 = UserFactory.create()
       user2 = UserFactory.create()
       keyword1 = KeywordFactory.create(%{}, user1)
-      keyword2 = KeywordFactory.create(%{}, user2)
+      _keyword2 = KeywordFactory.create(%{}, user2)
 
       user_keywords = Search.list_user_keywords(user1)
 
