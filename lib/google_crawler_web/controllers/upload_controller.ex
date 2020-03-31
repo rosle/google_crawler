@@ -5,7 +5,6 @@ defmodule GoogleCrawlerWeb.UploadController do
   alias GoogleCrawler.Search
   alias GoogleCrawler.Search.KeywordFile
 
-  @spec create(atom | %{__struct__: atom}, map) :: Plug.Conn.t()
   def create(conn, %{"keyword_file" => keyword_file}) do
     changeset = KeywordFile.changeset(%KeywordFile{}, keyword_file)
 
@@ -39,7 +38,7 @@ defmodule GoogleCrawlerWeb.UploadController do
       |> put_flash(
         :error,
         gettext("Some keywords could not be created: %{failed_keywords}",
-          failed_keywords: Enum.join(failed_keywords, ",")
+          failed_keywords: Enum.join(failed_keywords, ", ")
         )
       )
     else

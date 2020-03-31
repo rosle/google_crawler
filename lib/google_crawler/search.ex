@@ -45,10 +45,10 @@ defmodule GoogleCrawler.Search do
 
   ## Examples
 
-      iex> create_keyword(%User{}, %{field: value})
+      iex> create_keyword(%{field: value}, %User{})
       {:ok, %Keyword{}}
 
-      iex> create_keyword(%User{}, %{field: bad_value})
+      iex> create_keyword(%{field: bad_value}, %User{})
       {:error, %Ecto.Changeset{}}
 
   """
