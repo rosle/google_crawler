@@ -3,7 +3,9 @@ defmodule GoogleCrawler.Repo.Migrations.AddUserIdToKeywords do
 
   def change do
     alter table(:keywords) do
-      add :user_id, references(:users)
+      add :user_id, references(:users, on_delete: :delete_all), null: false
     end
+
+    create index(:keywords, [:user_id])
   end
 end

@@ -12,7 +12,7 @@ defmodule GoogleCrawler.Search.Keyword do
 
   def changeset(keyword, attrs \\ %{}) do
     keyword
-    |> cast(attrs, [:keyword])
-    |> validate_required([:keyword])
+    |> cast(attrs, [:keyword, :user_id])
+    |> validate_required([:keyword, :user_id])
   end
 end
