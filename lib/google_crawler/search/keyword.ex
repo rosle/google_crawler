@@ -9,7 +9,7 @@ defmodule GoogleCrawler.Search.Keyword do
 
   schema "keywords" do
     field :keyword, :string
-    field :status, GoogleCrawler.Search.Keyword.Status
+    field :status, GoogleCrawler.Search.Keyword.Status, default: :in_queue
     field :raw_html_result, :string
 
     belongs_to :user, GoogleCrawler.Accounts.User

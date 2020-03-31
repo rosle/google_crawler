@@ -1,4 +1,4 @@
-defmodule GoogleCrawler.Scapper do
+defmodule GoogleCrawler.Search.Scapper do
   def scrap(html) do
 
   end
