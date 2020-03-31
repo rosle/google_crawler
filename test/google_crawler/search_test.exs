@@ -2,39 +2,33 @@ defmodule GoogleCrawler.SearchTest do
   use GoogleCrawler.DataCase
 
   alias GoogleCrawler.Search
+  alias GoogleCrawler.Search.Keyword
+  alias GoogleCrawler.KeywordFactory
 
   describe "keywords" do
-    alias GoogleCrawler.Search.Keyword
-
-    @valid_attrs %{keyword: "some keyword"}
-    @invalid_attrs %{keyword: nil}
-
-    def keyword_fixture(attrs \\ %{}) do
-      {:ok, keyword} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Search.create_keyword()
-
-      keyword
-    end
-
     test "list_keywords/0 returns all keywords" do
-      keyword = keyword_fixture()
-      assert Search.list_keywords() == [keyword]
+      keyword = KeywordFactory.create()
+
+      assert Search.list_keywords() |> Enum.map(&Map.get(&1, :keyword)) == [keyword.keyword]
     end
 
     test "get_keyword/1 returns the keyword with given id" do
-      keyword = keyword_fixture()
-      assert Search.get_keyword(keyword.id) == keyword
+      keyword = KeywordFactory.create()
+
+      assert Search.get_keyword(keyword.id).keyword == keyword.keyword
     end
 
     test "create_keyword/1 with valid data creates a keyword" do
-      assert {:ok, %Keyword{} = keyword} = Search.create_keyword(@valid_attrs)
-      assert keyword.keyword == "some keyword"
+      keyword_attrs = KeywordFactory.build_attrs(%{keyword: "elixir"})
+
+      assert {:ok, %Keyword{} = keyword} = Search.create_keyword(keyword_attrs)
+      assert keyword.keyword == "elixir"
     end
 
     test "create_keyword/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Search.create_keyword(@invalid_attrs)
+      keyword_attrs = KeywordFactory.build_attrs(%{keyword: ""})
+
+      assert {:error, %Ecto.Changeset{}} = Search.create_keyword(keyword_attrs)
     end
   end
 
