@@ -1,4 +1,4 @@
-defmodule GoogleCrawler.Search.Crawler do
+defmodule GoogleCrawler.Search.PageFetcher do
   @url "https://www.google.com/search?q="
 
   def fetch(keyword) do

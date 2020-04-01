@@ -59,6 +59,29 @@ defmodule GoogleCrawler.Search do
   end
 
   @doc """
+    Save the keyword and perform the keyword search
+
+    ## Examples
+
+      iex> create_and_search_keyword(%{field: value}, %User{})
+      {:ok, %Keyword{}}
+
+      iex> create_and_search_keyword(%{field: bad_value}, %User{})
+      {:error, %Ecto.Changeset{}}
+  """
+  def create_and_search_keyword(attrs \\ %{}, user) do
+    case create_keyword(attrs, user) do
+      {:ok, %Keyword{} = keyword} ->
+        search_task = fn -> GoogleCrawler.Search.SearchKeywordTask.perform(keyword) end
+        Task.Supervisor.start_child(GoogleCrawler.TaskSupervisor, search_task)
+        {:ok, %Keyword{}}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:error, changeset}
+    end
+  end
+
+  @doc """
   Updates a keyword.
 
   ## Examples

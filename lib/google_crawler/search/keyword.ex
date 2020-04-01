@@ -16,9 +16,11 @@ defmodule GoogleCrawler.Search.Keyword do
     timestamps()
   end
 
+  @fields ~w(keyword user_id status raw_html_result)a
+
   def changeset(keyword, attrs \\ %{}) do
     keyword
-    |> cast(attrs, [:keyword, :user_id, :status])
+    |> cast(attrs, @fields)
     |> validate_required([:keyword, :user_id, :status])
   end
 end

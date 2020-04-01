@@ -27,7 +27,7 @@ defmodule GoogleCrawlerWeb.UploadController do
     csv_result
     |> Stream.map(fn keyword_row -> List.first(keyword_row) end)
     |> Stream.map(fn keyword -> %{keyword: keyword} end)
-    |> Enum.map(&Search.create_keyword(&1, conn.assigns.current_user))
+    |> Enum.map(&Search.create_and_search_keyword(&1, conn.assigns.current_user))
   end
 
   defp put_error_flash_for_failed_keywords(create_result, conn) do
