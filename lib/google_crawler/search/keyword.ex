@@ -1,6 +1,6 @@
 import EctoEnum
 
-defenum(GoogleCrawler.Search.Keyword.Status, in_queue: 0, in_progress: 1, completed: 2, failed: 3)
+defenum(GoogleCrawler.Search.Keyword.Status, in_queue: 0, in_progress: 1, failed: 2, completed: 3)
 
 defmodule GoogleCrawler.Search.Keyword do
   use Ecto.Schema

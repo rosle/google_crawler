@@ -10,6 +10,6 @@ defmodule GoogleCrawler.Search.PageScrapper do
     html
     |> String.chunk(:printable)
     |> Enum.filter(&String.printable?/1)
-    |> Enum.join
+    |> Enum.join()
   end
 end

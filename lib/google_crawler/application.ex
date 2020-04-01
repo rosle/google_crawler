@@ -12,8 +12,9 @@ defmodule GoogleCrawler.Application do
       GoogleCrawler.Repo,
       # Start the endpoint when the application starts
       GoogleCrawlerWeb.Endpoint,
-      # The supervisor for crawler background job
-      {Task.Supervisor, name: GoogleCrawler.TaskSupervisor}
+      # Start the Google Crawler worker
+      {Task.Supervisor, name: GoogleCrawler.TaskSupervisor},
+      GoogleCrawler.SearchKeywordWorker
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

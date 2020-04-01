@@ -72,7 +72,7 @@ defmodule GoogleCrawler.Search do
   def create_and_search_keyword(attrs \\ %{}, user) do
     case create_keyword(attrs, user) do
       {:ok, %Keyword{} = keyword} ->
-        GoogleCrawler.Task.perform(GoogleCrawler.Search.SearchKeywordTask, keyword)
+        GoogleCrawler.SearchKeywordWorker.search(keyword.id)
         {:ok, %Keyword{}}
 
       {:error, %Ecto.Changeset{} = changeset} ->

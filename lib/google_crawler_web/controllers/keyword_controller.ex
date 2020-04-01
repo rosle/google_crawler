@@ -6,6 +6,6 @@ defmodule GoogleCrawlerWeb.KeywordController do
   def show(conn, %{"id" => id}) do
     keyword = Search.get_keyword(id)
 
-    render conn, "show.html", keyword: keyword
+    render(conn, "show.html", keyword: keyword)
   end
 end
