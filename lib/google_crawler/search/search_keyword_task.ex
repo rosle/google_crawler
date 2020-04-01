@@ -12,6 +12,7 @@ defmodule GoogleCrawler.Search.SearchKeywordTask do
       {:ok, body} ->
         # Store the result to the db
         result = PageScrapper.scrap(body)
+        IO.inspect result
         Search.update_keyword(keyword, %{
           status: :completed,
           raw_html_result: result.raw_html_result
