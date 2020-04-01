@@ -59,6 +59,24 @@ defmodule GoogleCrawler.Search do
   end
 
   @doc """
+  Updates a keyword.
+
+  ## Examples
+
+      iex> update_keyword(keyword, %{field: new_value})
+      {:ok, %Keyword{}}
+
+      iex> update_keyword(keyword, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_keyword(%Keyword{} = keyword, attrs \\ %{}) do
+    keyword
+    |> Keyword.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
   Parses the keyword from the given file.
   Returns the stream for each line in the csv file as [line_result].
   Raise an exception if the file mime type is not supported or the file parsing is failed.

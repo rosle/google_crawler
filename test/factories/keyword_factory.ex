@@ -4,7 +4,8 @@ defmodule GoogleCrawler.KeywordFactory do
 
   def default_attrs do
     %{
-      keyword: FakerElixir.Lorem.word()
+      keyword: FakerElixir.Lorem.word(),
+      status: :in_queue
     }
   end
 

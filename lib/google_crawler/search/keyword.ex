@@ -1,7 +1,6 @@
 import EctoEnum
 
-defenum GoogleCrawler.Search.Keyword.Status,
-        in_queue: 0, in_progress: 1, completed: 2
+defenum(GoogleCrawler.Search.Keyword.Status, in_queue: 0, in_progress: 1, completed: 2)
 
 defmodule GoogleCrawler.Search.Keyword do
   use Ecto.Schema
@@ -19,7 +18,7 @@ defmodule GoogleCrawler.Search.Keyword do
 
   def changeset(keyword, attrs \\ %{}) do
     keyword
-    |> cast(attrs, [:keyword, :user_id])
-    |> validate_required([:keyword, :user_id])
+    |> cast(attrs, [:keyword, :user_id, :status])
+    |> validate_required([:keyword, :user_id, :status])
   end
 end

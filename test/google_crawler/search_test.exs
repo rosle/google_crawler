@@ -30,6 +30,8 @@ defmodule GoogleCrawler.SearchTest do
 
       assert {:ok, %Keyword{} = keyword} = Search.create_keyword(keyword_attrs, user)
       assert keyword.keyword == "elixir"
+      assert keyword.status == :in_queue
+      assert keyword.user_id == user.id
     end
 
     test "create_keyword/1 with invalid data returns error changeset" do
@@ -37,6 +39,23 @@ defmodule GoogleCrawler.SearchTest do
       keyword_attrs = KeywordFactory.build_attrs(%{keyword: ""})
 
       assert {:error, %Ecto.Changeset{}} = Search.create_keyword(keyword_attrs, user)
+    end
+
+    test "update_keyword/2 with valid data updates the keyword" do
+      keyword = KeywordFactory.create()
+      keyword_attrs = %{keyword: "new", status: :in_progress}
+
+      assert {:ok, %Keyword{} = keyword} = Search.update_keyword(keyword, keyword_attrs)
+      assert keyword.keyword == "new"
+      assert keyword.status == :in_progress
+    end
+
+    test "update_keyword/2 with invalid data returns error changeset" do
+      keyword = KeywordFactory.create()
+      keyword_attrs = %{keyword: "", status: :invalid}
+
+      assert {:error, %Ecto.Changeset{}} = Search.update_keyword(keyword, keyword_attrs)
+      assert Repo.get_by(Keyword, keyword: keyword.keyword) != nil
     end
   end
 
