@@ -1,0 +1,34 @@
+body.dashboard.index {
+  .keyword-list-item {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .keyword-list-item:not(:last-child)::after {
+    display: block;
+
+    width: 100%;
+    height: 1px;
+
+    background-color: #eeeeee;
+
+    content: "";
+  }
+
+  .keyword-col {
+    padding: 10px;
+  }
+
+  .keyword-col.keyword-name {
+    flex: 0 0 40%;
+  }
+
+  .keyword-col.keyword-status {
+    flex: 0 0 30%;
+  }
+
+  .keyword-col.keyword-action {
+    flex: 0 0 30%;
+    text-align: right;
+  }
+}

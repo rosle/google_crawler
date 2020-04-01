@@ -7,9 +7,21 @@
   <%= if length(@keywords) == 0 do %>
     <p><%= gettext("You don't have any keywords.") %></p>
   <% else %>
-    <ul>
+    <ul class="keyword-list">
       <%= for keyword <- @keywords do %>
-        <li><%= keyword.keyword %></li>
+        <li class="keyword-list-item">
+          <div class="keyword-col keyword-name">
+            <%= keyword.keyword %>
+          </div>
+          <div class="keyword-col keyword-status">
+            <%= keyword.status %>
+          </div>
+          <div class="keyword-col keyword-action">
+            <%= if keyword.status == :completed do %>
+              <%= link(gettext("View result"), to: Routes.keyword_path(@conn, :show, keyword)) %>
+            <% end %>
+          </div>
+        </li>
       <% end %>
     </ul>
   <% end %>
