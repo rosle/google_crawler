@@ -2,7 +2,8 @@ defmodule GoogleCrawler.Search.PageFetcher do
   @url "https://www.google.com/search?q="
 
   def fetch(keyword) do
-    case HTTPoison.get(@url <> keyword) do
+    IO.puts "Performing search ... #{@url <> URI.encode(keyword)}"
+    case HTTPoison.get(@url <> URI.encode(keyword)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, body}
 

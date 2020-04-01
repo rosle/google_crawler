@@ -72,8 +72,7 @@ defmodule GoogleCrawler.Search do
   def create_and_search_keyword(attrs \\ %{}, user) do
     case create_keyword(attrs, user) do
       {:ok, %Keyword{} = keyword} ->
-        search_task = fn -> GoogleCrawler.Search.SearchKeywordTask.perform(keyword) end
-        Task.Supervisor.start_child(GoogleCrawler.TaskSupervisor, search_task)
+        GoogleCrawler.Task.perform(GoogleCrawler.Search.SearchKeywordTask, keyword)
         {:ok, %Keyword{}}
 
       {:error, %Ecto.Changeset{} = changeset} ->
