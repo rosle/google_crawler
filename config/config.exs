@@ -18,6 +18,8 @@ config :google_crawler, GoogleCrawlerWeb.Endpoint,
   pubsub: [name: GoogleCrawler.PubSub, adapter: Phoenix.PubSub.PG2],
   live_view: [signing_salt: "7PRdGFq8"]
 
+config :google_crawler, :google_api_client, GoogleCrawler.Google.ApiClient
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

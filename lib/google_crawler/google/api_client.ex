@@ -1,7 +1,13 @@
-defmodule GoogleCrawler.Search.PageFetcher do
+defmodule GoogleCrawler.Google.ApiClientBehaviour do
+  @callback search(keyword :: String.t()) :: {:ok, String.t()} | {:error, String.t()}
+end
+
+defmodule GoogleCrawler.Google.ApiClient do
+  @behaviour GoogleCrawler.Google.ApiClientBehaviour
+
   @url "https://www.google.com/search?q="
 
-  def fetch(keyword) do
+  def search(keyword) do
     case HTTPoison.get(@url <> URI.encode(keyword)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         {:ok, body}

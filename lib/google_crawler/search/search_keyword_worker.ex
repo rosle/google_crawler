@@ -16,6 +16,10 @@ defmodule GoogleCrawler.SearchKeywordWorker do
     GenServer.call(__MODULE__, {:search, keyword_id})
   end
 
+  def get_state do
+    GenServer.call(__MODULE__, {:get_state})
+  end
+
   # Server Callbacks
 
   def init(state) do
@@ -33,7 +37,11 @@ defmodule GoogleCrawler.SearchKeywordWorker do
     task = start_task(keyword)
     new_state = Map.put(state, task.ref, {keyword, 0})
 
-    {:reply, :ok, new_state}
+    {:reply, task, new_state}
+  end
+
+  def handle_call({:get_state}, _from, state) do
+    {:reply, state, state}
   end
 
   def handle_info({ref, result}, state) do

@@ -1,4 +1,4 @@
-defmodule GoogleCrawler.Search.PageScrapper do
+defmodule GoogleCrawler.Google.Scrapper do
   def scrap(html) do
     # TODO: Scrap the page content
     %{

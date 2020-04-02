@@ -14,5 +14,8 @@ config :google_crawler, GoogleCrawlerWeb.Endpoint,
   http: [port: 4002],
   server: false
 
+# Use Mock client for testing
+config :google_crawler, :google_api_client, GoogleCrawler.Google.MockApiClient
+
 # Print only warnings and errors during test
 config :logger, level: :warn
