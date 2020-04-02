@@ -14,6 +14,9 @@ defmodule GoogleCrawler.Search.SearchKeywordWorkerTest do
 
     assert %{^task_ref => {keyword, 0}} = SearchKeywordWorker.get_state()
     assert Search.get_keyword(keyword.id).status == :in_progress
+
+    :timer.sleep(1000)
+    assert SearchKeywordWorker.get_state() == %{}
   end
 
   test "search/1 updates the keyword result when the task is completed" do

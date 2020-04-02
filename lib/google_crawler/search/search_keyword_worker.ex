@@ -27,8 +27,6 @@ defmodule GoogleCrawler.SearchKeywordWorker do
   end
 
   def handle_call({:search, keyword_id}, _from, state) do
-    IO.puts("Handle call #{keyword_id}")
-
     keyword = Search.get_keyword(keyword_id)
     Search.update_keyword(keyword, %{status: :in_progress})
 
@@ -45,8 +43,6 @@ defmodule GoogleCrawler.SearchKeywordWorker do
   end
 
   def handle_info({ref, result}, state) do
-    IO.puts("Handle info | success")
-
     {keyword, _retry_count} = Map.get(state, ref)
 
     Search.update_keyword(keyword, %{
@@ -62,22 +58,17 @@ defmodule GoogleCrawler.SearchKeywordWorker do
   end
 
   def handle_info({:DOWN, ref, :process, _pid, _reason}, state) do
-    IO.puts("Handle info | failed")
-
     {keyword, retry_count} = Map.get(state, ref)
 
     new_state =
       if retry_count < @max_retry_count do
-        IO.puts("Retry... #{retry_count}")
         task = start_task(keyword)
 
         state
         |> Map.delete(ref)
         |> Map.put(task.ref, {keyword, retry_count + 1})
       else
-        IO.puts("Done with failed...")
         Search.update_keyword(keyword, %{status: :failed})
-
         Map.delete(state, ref)
       end
 
