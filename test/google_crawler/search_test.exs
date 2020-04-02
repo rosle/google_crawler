@@ -41,6 +41,21 @@ defmodule GoogleCrawler.SearchTest do
       assert {:error, %Ecto.Changeset{}} = Search.create_keyword(keyword_attrs, user)
     end
 
+    test "create_and_search_keyword/2 with valid data creates the keyword and triggers the task to search the keyword" do
+      user = UserFactory.create()
+      keyword_attrs = KeywordFactory.build_attrs()
+
+      assert {:ok, %Keyword{}} = Search.create_and_search_keyword(keyword_attrs, user)
+      assert GoogleCrawler.SearchKeywordWorker.get_state() != %{}
+    end
+
+    test "create_and_search_keyword/2 with invalid data creates the keyword and triggers the task to search the keyword" do
+      user = UserFactory.create()
+      keyword_attrs = KeywordFactory.build_attrs(%{keyword: ""})
+
+      assert {:error, %Ecto.Changeset{}} = Search.create_and_search_keyword(keyword_attrs, user)
+    end
+
     test "update_keyword/2 with valid data updates the keyword" do
       keyword = KeywordFactory.create()
       keyword_attrs = %{keyword: "new", status: :in_progress}
