@@ -98,6 +98,9 @@ header section {
   flex-direction: column;
   justify-content: space-between;
 }
+header section a {
+  color: black;
+}
 header nav ul,
 header nav li {
   margin: 0;

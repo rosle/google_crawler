@@ -1,0 +1,6 @@
+<h2><%= gettext("Keyword: %{keyword}", keyword: @keyword.keyword) %></h2>
+
+<section>
+  <h3>Result:</h3>
+  <iframe srcdoc="<%=@keyword.raw_html_result %>"></iframe>
+</section>

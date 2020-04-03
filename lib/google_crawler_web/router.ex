@@ -28,6 +28,7 @@ defmodule GoogleCrawlerWeb.Router do
 
     resources "/sessions", SessionController, only: [:delete]
     resources "/upload", UploadController, only: [:create]
+    resources "/keywords", KeywordController, only: [:show]
 
     get "/", DashboardController, :index
   end

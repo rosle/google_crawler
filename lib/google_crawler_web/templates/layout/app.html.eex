@@ -11,7 +11,7 @@
   <body class="<%= body_class(@conn) %>">
     <header>
       <section class="container">
-        <h1><%= gettext("Google Crawler") %></h1>
+        <h1><%= link gettext("Google Crawler"), to: "/" %></h1>
         <nav>
           <ul>
             <%= if @conn.assigns.user_signed_in? do %>
