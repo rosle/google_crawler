@@ -13,7 +13,7 @@ defmodule GoogleCrawler.Google.Scrapper do
   alias GoogleCrawler.Google.ScrapperResult
 
   @selectors %{
-    total_result: "#result-stats",
+    total_results: "#result-stats",
     non_ads_links: "div.r > a",
     top_ads_links: "#tads .ads-ad > .ad_cclk > a.V0MxL",
     bottom_ads_links: "#bottomads .ads-ad > .ad_cclk > a.V0MxL"
@@ -33,7 +33,7 @@ defmodule GoogleCrawler.Google.Scrapper do
 
   # TODO: Make sure the result page is in English to match the regex
   defp parse_total_results(result, document) do
-    total_results_text = Floki.find(document, "#result-stats") |> Floki.text()
+    total_results_text = Floki.find(document, @selectors.total_results) |> Floki.text()
 
     total_results =
       Regex.named_captures(~r/About (?<total_result>.*) results/, total_results_text)

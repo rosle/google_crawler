@@ -10,17 +10,27 @@ defmodule GoogleCrawler.Search.Keyword do
     field :keyword, :string
     field :status, GoogleCrawler.Search.Keyword.Status, default: :in_queue
     field :raw_html_result, :string
+    field :total_results, :integer
+    field :total_ads_links, :integer
+    field :total_links, :integer
 
     belongs_to :user, GoogleCrawler.Accounts.User
+    has_many :links, GoogleCrawler.Search.Link
 
     timestamps()
   end
 
-  @fields ~w(keyword user_id status raw_html_result)a
+  @fields ~w(keyword user_id status raw_html_result total_results total_ads_links total_links)a
 
   def changeset(keyword, attrs \\ %{}) do
     keyword
     |> cast(attrs, @fields)
     |> validate_required([:keyword, :user_id, :status])
+  end
+
+  def update_result_changeset(keyword, attrs \\ %{}) do
+    keyword
+    |> changeset(attrs)
+    |> validate_required([:raw_html_result, :total_results, :total_ads_links, :total_links])
   end
 end

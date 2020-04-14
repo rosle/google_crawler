@@ -98,6 +98,13 @@ defmodule GoogleCrawler.Search do
     |> Repo.update()
   end
 
+  # TODO:
+  def update_keyword_result(%Keyword{} = keyword, attrs) do
+    keyword
+    |> Keyword.update_result_changeset(attrs)
+    |> Repo.update()
+  end
+
   @doc """
   Parses the keyword from the given file.
   Returns the stream for each line in the csv file as [line_result].
