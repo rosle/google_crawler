@@ -34,28 +34,19 @@ defmodule GoogleCrawler.Google.Scrapper do
   end
 
   defp parse_non_ads_links(result, document) do
-    non_ads_links =
-      document
-      |> Floki.find(@selectors.non_ads_links)
-      |> Floki.attribute("href")
+    non_ads_links = parse_links(document, @selectors.non_ads_links)
 
     %{result | links: non_ads_links, total_links: length(non_ads_links)}
   end
 
   defp parse_top_ads_links(result, document) do
-    top_ads_links =
-      document
-      |> Floki.find(@selectors.top_ads_links)
-      |> Floki.attribute("href")
+    top_ads_links = parse_links(document, @selectors.top_ads_links)
 
     %{result | top_ads_links: top_ads_links, total_top_ads_links: length(top_ads_links)}
   end
 
   defp parse_bottom_ads_links(result, document) do
-    bottom_ads_links =
-      document
-      |> Floki.find(@selectors.bottom_ads_links)
-      |> Floki.attribute("href")
+    bottom_ads_links = parse_links(document, @selectors.bottom_ads_links)
 
     %{
       result
@@ -66,6 +57,12 @@ defmodule GoogleCrawler.Google.Scrapper do
 
   defp parse_raw_html_result(result, html) do
     %{result | raw_html_result: cleanup_html(html)}
+  end
+
+  defp parse_links(document, selector) do
+    document
+    |> Floki.find(selector)
+    |> Floki.attribute("href")
   end
 
   defp cleanup_html(html) do
