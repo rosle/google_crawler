@@ -8,7 +8,7 @@ defmodule GoogleCrawler.Search.Link do
 
   schema "links" do
     field :url, :string
-    field :is_ads, :boolean
+    field :is_ads, :boolean, default: false
     field :ads_position, GoogleCrawler.Search.Link.AdsPosition
 
     belongs_to :keyword, GoogleCrawler.Search.Keyword
@@ -26,20 +26,11 @@ defmodule GoogleCrawler.Search.Link do
   end
 
   def validate_ads_position(%Ecto.Changeset{changes: %{is_ads: true}} = changeset) do
-    validate_change(changeset, :ads_position, fn :ads_position, ads_position ->
-      case ads_position do
-        nil -> [ads_position: "is required"]
-        _ -> []
-      end
-    end)
+    case get_field(changeset, :ads_position) do
+      nil -> add_error(changeset, :ads_position, "can't be blank")
+      _ -> changeset
+    end
   end
 
-  def validate_ads_position(%Ecto.Changeset{changes: %{is_ads: false}} = changeset) do
-    validate_change(changeset, :ads_position, fn :ads_position, ads_position ->
-      case ads_position do
-        nil -> []
-        _ -> [ads_position: "must be nil"]
-      end
-    end)
-  end
+  def validate_ads_position(changeset), do: changeset
 end
