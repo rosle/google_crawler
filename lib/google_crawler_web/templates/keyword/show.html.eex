@@ -1,6 +1,20 @@
 <h2><%= gettext("Keyword: %{keyword}", keyword: @keyword.keyword) %></h2>
 
 <section>
+  <ul>
+    <li>
+      <%= gettext("Total Results: %{total_results}", total_results: @keyword.total_results)%>
+    </li>
+    <li>
+      <%= gettext("Total Ads: %{total_ads}", total_ads: @keyword.total_ads_links)%>
+    </li>
+    <li>
+      <%= gettext("Total Non-Ads: %{total_non_ads}", total_non_ads: @keyword.total_links)%>
+    </li>
+  </ul>
+</section>
+
+<section>
   <h3>Result:</h3>
   <iframe srcdoc="<%=@keyword.raw_html_result %>"></iframe>
 </section>

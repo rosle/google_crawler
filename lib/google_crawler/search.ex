@@ -98,7 +98,18 @@ defmodule GoogleCrawler.Search do
     |> Repo.update()
   end
 
-  # TODO:
+  @doc """
+  Update the search result for a keyword.
+
+  ## Examples
+
+      iex> update_keyword_result(keyword, %{field: new_value})
+      {:ok, %Keyword{}}
+
+      iex> update_keyword_result(keyword, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
   def update_keyword_result(%Keyword{} = keyword, attrs) do
     keyword
     |> Keyword.update_result_changeset(attrs)
