@@ -32,5 +32,8 @@ defmodule GoogleCrawler.Search.Keyword do
     keyword
     |> changeset(attrs)
     |> validate_required([:raw_html_result, :total_results, :total_ads_links, :total_links])
+    |> validate_number(:total_results, greater_than_or_equal_to: 0)
+    |> validate_number(:total_ads_links, greater_than_or_equal_to: 0)
+    |> validate_number(:total_links, greater_than_or_equal_to: 0)
   end
 end
