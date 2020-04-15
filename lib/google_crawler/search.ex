@@ -4,10 +4,13 @@ defmodule GoogleCrawler.Search do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.Multi
   alias GoogleCrawler.Repo
 
   alias GoogleCrawler.Search.Keyword
   alias GoogleCrawler.Search.KeywordFile
+  alias GoogleCrawler.Search.Link
+  alias GoogleCrawler.Google.ScrapperResult
 
   @doc """
   Returns the list of keywords belongs to the given user.
@@ -117,6 +120,35 @@ defmodule GoogleCrawler.Search do
   end
 
   @doc """
+  Update the keyword result from the scrapper result and mark the keyword as completed.
+  """
+  def update_keyword_result_from_scrapper(%Keyword{} = keyword, %ScrapperResult{} = result) do
+    keyword_changeset =
+      Keyword.update_result_changeset(keyword, %{
+        status: :completed,
+        raw_html_result: result.raw_html_result,
+        total_results: result.total_results,
+        total_ads_links: result.total_top_ads_links + result.total_bottom_ads_links,
+        total_links: result.total_links
+      })
+
+    Multi.new()
+    |> create_keyword_link_multi(keyword, result.top_ads_links, %{
+      is_ads: true,
+      ads_position: :top
+    })
+    |> create_keyword_link_multi(keyword, result.bottom_ads_links, %{
+      is_ads: true,
+      ads_position: :bottom
+    })
+    |> create_keyword_link_multi(keyword, result.links, %{
+      is_ads: false
+    })
+    |> Multi.update(:keyword, keyword_changeset)
+    |> Repo.transaction()
+  end
+
+  @doc """
   Parses the keyword from the given file.
   Returns the stream for each line in the csv file as [line_result].
   Raise an exception if the file mime type is not supported or the file parsing is failed.
@@ -129,5 +161,31 @@ defmodule GoogleCrawler.Search do
   """
   def parse_keywords_from_file!(file_path, mime_type) do
     KeywordFile.parse!(file_path, mime_type)
+  end
+
+  @doc """
+  List result links of the given keyword.
+  """
+  def list_keyword_links(keyword, query \\ []) do
+    Link
+    |> where(keyword_id: ^keyword.id)
+    |> where(^query)
+    |> order_by(desc: :is_ads)
+    |> Repo.all()
+  end
+
+  # TODO: Recheck how to document private functions
+  # Create the multi to insert the links.
+  # Other attributes of the link except the link itself must be specified
+  defp create_keyword_link_multi(multi, _keyword, [], _attrs), do: multi
+
+  defp create_keyword_link_multi(multi, keyword, [link | rest_of_links], attrs) do
+    changeset =
+      Ecto.build_assoc(keyword, :links)
+      |> Link.changeset(Map.put(attrs, :url, link))
+
+    multi
+    |> Multi.insert("link_#{length(multi.operations)}", changeset)
+    |> create_keyword_link_multi(keyword, rest_of_links, attrs)
   end
 end

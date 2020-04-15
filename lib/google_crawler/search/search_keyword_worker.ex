@@ -46,7 +46,10 @@ defmodule GoogleCrawler.SearchKeywordWorker do
   def handle_info({ref, result}, state) do
     {keyword, _retry_count} = Map.get(state, ref)
 
-    update_keyword_result(keyword, result)
+    case Search.update_keyword_result_from_scrapper(keyword, result) do
+      {:ok, _result} -> :ok
+      {:error, _reason} -> send(self(), {:DOWN, ref, :process, self(), :failed_to_save_result})
+    end
 
     # Demonitor the task and remove from the state
     Process.demonitor(ref, [:flush])
@@ -77,15 +80,5 @@ defmodule GoogleCrawler.SearchKeywordWorker do
     Task.Supervisor.async_nolink(GoogleCrawler.TaskSupervisor, fn ->
       GoogleCrawler.Search.SearchKeywordTask.perform(keyword)
     end)
-  end
-
-  defp update_keyword_result(%Keyword{} = keyword, %ScrapperResult{} = result) do
-    Search.update_keyword(keyword, %{
-      status: :completed,
-      raw_html_result: result.raw_html_result,
-      total_results: result.total_results,
-      total_ads_links: result.total_top_ads_links + result.total_bottom_ads_links,
-      total_links: result.total_links
-    })
   end
 end

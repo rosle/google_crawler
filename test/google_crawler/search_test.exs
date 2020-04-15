@@ -3,7 +3,9 @@ defmodule GoogleCrawler.SearchTest do
 
   alias GoogleCrawler.Search
   alias GoogleCrawler.Search.Keyword
+  alias GoogleCrawler.Google.ScrapperResult
   alias GoogleCrawler.KeywordFactory
+  alias GoogleCrawler.ScrapperResultFactory
   alias GoogleCrawler.UserFactory
 
   describe "keywords" do
@@ -72,6 +74,48 @@ defmodule GoogleCrawler.SearchTest do
       assert {:error, %Ecto.Changeset{}} = Search.update_keyword(keyword, keyword_attrs)
       assert Repo.get_by(Keyword, keyword: keyword.keyword) != nil
     end
+
+    test "update_keyword_result_from_scrapper/2 updates the keyword results and associates the keyword links" do
+      keyword = KeywordFactory.create()
+
+      scrapper_result =
+        struct(
+          ScrapperResult,
+          ScrapperResultFactory.build_attrs(
+            total_results: 50_000,
+            total_links: 10,
+            total_top_ads_links: 3,
+            total_bottom_ads_links: 1
+          )
+        )
+
+      Search.update_keyword_result_from_scrapper(keyword, scrapper_result)
+
+      # Keyword result summary is updated
+      assert %{
+               total_results: 50_000,
+               total_links: 10,
+               total_ads_links: 4
+             } = Search.get_keyword(keyword.id)
+
+      # Top Ads links is inserted
+      top_ads_query = [is_ads: true, ads_position: :top]
+      top_ads_links = get_link_urls(Search.list_keyword_links(keyword, top_ads_query))
+      assert 3 = length(top_ads_links)
+      assert scrapper_result.top_ads_links == top_ads_links
+
+      # Bottom Ads links is inserted
+      bottom_ads_query = [is_ads: true, ads_position: :bottom]
+      bottom_ads_links = get_link_urls(Search.list_keyword_links(keyword, bottom_ads_query))
+      assert 1 = length(bottom_ads_links)
+      assert scrapper_result.bottom_ads_links == bottom_ads_links
+
+      # Non-Ads links is inserted
+      non_ads_query = [is_ads: false]
+      links = get_link_urls(Search.list_keyword_links(keyword, non_ads_query))
+      assert 10 = length(links)
+      assert scrapper_result.links == links
+    end
   end
 
   describe "keyword file" do
@@ -93,5 +137,9 @@ defmodule GoogleCrawler.SearchTest do
         )
       end
     end
+  end
+
+  defp get_link_urls(links) do
+    Enum.map(links, &Map.get(&1, :url))
   end
 end
