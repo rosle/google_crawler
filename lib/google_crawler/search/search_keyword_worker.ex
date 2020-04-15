@@ -79,13 +79,12 @@ defmodule GoogleCrawler.SearchKeywordWorker do
     end)
   end
 
-  #  TODO:
   defp update_keyword_result(%Keyword{} = keyword, %ScrapperResult{} = result) do
     Search.update_keyword(keyword, %{
       status: :completed,
       raw_html_result: result.raw_html_result,
       total_results: result.total_results,
-      total_ads_links: result.total_top_ads_link + result.total_bottom_ads_link,
+      total_ads_links: result.total_top_ads_links + result.total_bottom_ads_links,
       total_links: result.total_links
     })
   end

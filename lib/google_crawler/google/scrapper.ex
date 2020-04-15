@@ -31,7 +31,6 @@ defmodule GoogleCrawler.Google.Scrapper do
     |> parse_bottom_ads_links(document)
   end
 
-  # TODO: Make sure the result page is in English to match the regex
   defp parse_total_results(result, document) do
     total_results_text = Floki.find(document, @selectors.total_results) |> Floki.text()
 
