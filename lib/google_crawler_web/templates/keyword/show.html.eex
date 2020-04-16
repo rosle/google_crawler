@@ -1,3 +1,9 @@
+<nav>
+  <ul>
+    <li><%= link(gettext("⬅️ Back"), to: Routes.dashboard_path(@conn, :index)) %></li>
+  </ul>
+</nav>
+
 <h2><%= gettext("Keyword: %{keyword}", keyword: @keyword.keyword) %></h2>
 
 <section>
@@ -15,12 +21,12 @@
 </section>
 
 <section>
-  <h3>Results:</h3>
+  <h3><%= gettext("Results:") %></h3>
   <ul class="list-keyword-link">
     <%= for link <- @keyword.links do %>
       <li>
         <%= if link.is_ads do %>
-          <span class="badge badge-ads">Ads</span>
+          <span class="badge badge-ads"><%= gettext("Ads") %></span>
           <span class="badge badge-ads-position"><%= link.ads_position %></span>
         <% end %>
         <%= link(link.url, to: link.url) %>
@@ -30,6 +36,6 @@
 </section>
 
 <section>
-  <h3>Raw Html Result:</h3>
+  <h3><%= gettext("Raw Html Result:") %></h3>
   <iframe srcdoc="<%=@keyword.raw_html_result %>"></iframe>
 </section>

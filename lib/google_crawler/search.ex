@@ -24,6 +24,7 @@ defmodule GoogleCrawler.Search do
   def list_user_keywords(user) do
     Keyword
     |> where(user_id: ^user.id)
+    |> order_by(desc: :inserted_at)
     |> Repo.all()
   end
 
