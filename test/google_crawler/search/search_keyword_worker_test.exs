@@ -38,7 +38,6 @@ defmodule GoogleCrawler.Search.SearchKeywordWorkerTest do
     keyword = KeywordFactory.create(%{keyword: "error"})
 
     task = SearchKeywordWorker.search(keyword.id)
-    task_ref = task.ref
 
     # Find a way to test without sleep 😔
     :timer.sleep(1000)
