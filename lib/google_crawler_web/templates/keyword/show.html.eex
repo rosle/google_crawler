@@ -15,6 +15,21 @@
 </section>
 
 <section>
-  <h3>Result:</h3>
+  <h3>Results:</h3>
+  <ul class="list-keyword-link">
+    <%= for link <- @keyword.links do %>
+      <li>
+        <%= if link.is_ads do %>
+          <span class="badge badge-ads">Ads</span>
+          <span class="badge badge-ads-position"><%= link.ads_position %></span>
+        <% end %>
+        <%= link(link.url, to: link.url) %>
+      </li>
+    <% end %>
+  </ul>
+</section>
+
+<section>
+  <h3>Raw Html Result:</h3>
   <iframe srcdoc="<%=@keyword.raw_html_result %>"></iframe>
 </section>

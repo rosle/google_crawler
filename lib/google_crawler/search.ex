@@ -41,7 +41,10 @@ defmodule GoogleCrawler.Search do
       ** (Ecto.NoResultsError)
 
   """
-  def get_keyword(id), do: Repo.get(Keyword, id)
+  def get_keyword(id) do
+    Repo.get(Keyword, id)
+    |> Repo.preload(:links)
+  end
 
   @doc """
   Creates a keyword.
