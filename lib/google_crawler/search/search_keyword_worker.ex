@@ -1,4 +1,9 @@
 defmodule GoogleCrawler.SearchKeywordWorker do
+  @moduledoc """
+  Perform the keyword search and scrap in background.
+  Update the result of the keyword after it is successfully scraped.
+  The retry mechanism is implemented. So the task will be retried if it is failed.
+  """
   use GenServer
 
   alias GoogleCrawler.Search
@@ -43,36 +48,44 @@ defmodule GoogleCrawler.SearchKeywordWorker do
   end
 
   def handle_info({ref, result}, state) do
-    {keyword, _retry_count} = Map.get(state, ref)
+    {keyword, retry_count} = Map.get(state, ref)
 
-    Search.update_keyword(keyword, %{
-      status: :completed,
-      raw_html_result: result.raw_html_result
-    })
+    new_state =
+      case Search.update_keyword_result_from_scraper(keyword, result) do
+        {:ok, _result} ->
+          # Demonitor the task and remove from the state
+          Process.demonitor(ref, [:flush])
+          Map.delete(state, ref)
 
-    # Demonitor the task and remove from the state
-    Process.demonitor(ref, [:flush])
-    new_state = Map.delete(state, ref)
+        {:error, _reason} ->
+          maybe_retry(state, ref, keyword, retry_count)
+      end
 
     {:noreply, new_state}
   end
 
+  def handle_info({:DOWN, _ref, :process, _pid, :normal}, state) do
+    {:noreply, state}
+  end
+
   def handle_info({:DOWN, ref, :process, _pid, _reason}, state) do
     {keyword, retry_count} = Map.get(state, ref)
-
-    new_state =
-      if retry_count < @max_retry_count do
-        task = start_task(keyword)
-
-        state
-        |> Map.delete(ref)
-        |> Map.put(task.ref, {keyword, retry_count + 1})
-      else
-        Search.update_keyword(keyword, %{status: :failed})
-        Map.delete(state, ref)
-      end
+    new_state = maybe_retry(state, ref, keyword, retry_count)
 
     {:noreply, new_state}
+  end
+
+  defp maybe_retry(state, ref, keyword, retry_count) do
+    if retry_count < @max_retry_count do
+      task = start_task(keyword)
+
+      state
+      |> Map.delete(ref)
+      |> Map.put(task.ref, {keyword, retry_count + 1})
+    else
+      Search.update_keyword(keyword, %{status: :failed})
+      Map.delete(state, ref)
+    end
   end
 
   defp start_task(%Keyword{} = keyword) do

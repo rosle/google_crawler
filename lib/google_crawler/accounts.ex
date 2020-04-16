@@ -64,7 +64,7 @@ defmodule GoogleCrawler.Accounts do
   ## Examples
 
       iex> auth_user("bob@email.com", "valid_password")
-      {:ok, $User{}}
+      {:ok, %User{}}
 
       iex> auth_user("bob@email.com", "invalid_password")
       {:error, "invalid password"}

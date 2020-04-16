@@ -47,7 +47,8 @@ defmodule GoogleCrawler.MixProject do
       {:faker_elixir_octopus, "~> 1.0.0", only: [:dev, :test]},
       {:csv, "~> 2.3"},
       {:httpoison, "~> 1.6"},
-      {:ecto_enum, "~> 1.4"}
+      {:ecto_enum, "~> 1.4"},
+      {:floki, "~> 0.26.0"}
     ]
   end
 

@@ -15,7 +15,9 @@ defmodule GoogleCrawler.Search.SearchKeywordWorkerTest do
     assert %{^task_ref => {keyword, 0}} = SearchKeywordWorker.get_state()
     assert Search.get_keyword(keyword.id).status == :in_progress
 
-    :timer.sleep(1000)
+    # Find a way to test without sleep 😔
+    :timer.sleep(1500)
+
     assert SearchKeywordWorker.get_state() == %{}
   end
 
@@ -25,7 +27,7 @@ defmodule GoogleCrawler.Search.SearchKeywordWorkerTest do
     SearchKeywordWorker.search(keyword.id)
 
     # Find a way to test without sleep 😔
-    :timer.sleep(1000)
+    :timer.sleep(1500)
 
     keyword = Search.get_keyword(keyword.id)
     assert keyword.status == :completed
@@ -38,10 +40,9 @@ defmodule GoogleCrawler.Search.SearchKeywordWorkerTest do
     keyword = KeywordFactory.create(%{keyword: "error"})
 
     task = SearchKeywordWorker.search(keyword.id)
-    task_ref = task.ref
 
     # Find a way to test without sleep 😔
-    :timer.sleep(1000)
+    :timer.sleep(1500)
 
     assert Search.get_keyword(keyword.id).status == :failed
     assert SearchKeywordWorker.get_state() == %{}

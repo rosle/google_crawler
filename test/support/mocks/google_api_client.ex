@@ -6,11 +6,11 @@ defmodule GoogleCrawler.Google.MockApiClient do
   end
 
   def search(_keyword) do
-    {:ok, response_fixtures('search_result.html')}
+    {:ok, response_fixtures('hotels.html')}
   end
 
   defp response_fixtures(path) do
-    Path.join(["test/fixtures", path])
+    Path.join(["test/fixtures/search_results", path])
     |> File.read!()
   end
 end

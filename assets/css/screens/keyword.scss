@@ -1,4 +1,29 @@
 body.keyword.show {
+  nav ul {
+    list-style: none;
+  }
+
+  .badge {
+    border: {
+      width: 1px;
+      style: solid;
+      radius: 5px;
+    }
+    font-size: x-small;
+    padding: 3px;
+    text-transform: uppercase;
+  }
+
+  .badge-ads {
+    border-color: green;
+    color: green;
+  }
+
+  .badge-ads-position {
+    border-color: grey;
+    color: grey;
+  }
+
   iframe {
     width: 100%;
     height: 400px;

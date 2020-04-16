@@ -1,6 +1,41 @@
+<nav>
+  <ul>
+    <li><%= link(gettext("⬅️ Back"), to: Routes.dashboard_path(@conn, :index)) %></li>
+  </ul>
+</nav>
+
 <h2><%= gettext("Keyword: %{keyword}", keyword: @keyword.keyword) %></h2>
 
 <section>
-  <h3>Result:</h3>
+  <ul>
+    <li>
+      <%= gettext("Total Results: %{total_results}", total_results: @keyword.total_results)%>
+    </li>
+    <li>
+      <%= gettext("Total Ads: %{total_ads}", total_ads: @keyword.total_ads_links)%>
+    </li>
+    <li>
+      <%= gettext("Total Non-Ads: %{total_non_ads}", total_non_ads: @keyword.total_links)%>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h3><%= gettext("Results:") %></h3>
+  <ul class="list-keyword-link">
+    <%= for link <- @keyword.links do %>
+      <li>
+        <%= if link.is_ads do %>
+          <span class="badge badge-ads"><%= gettext("Ads") %></span>
+          <span class="badge badge-ads-position"><%= link.ads_position %></span>
+        <% end %>
+        <%= link(link.url, to: link.url) %>
+      </li>
+    <% end %>
+  </ul>
+</section>
+
+<section>
+  <h3><%= gettext("Raw Html Result:") %></h3>
   <iframe srcdoc="<%=@keyword.raw_html_result %>"></iframe>
 </section>
