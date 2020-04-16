@@ -20,7 +20,7 @@ defmodule GoogleCrawler.LinkFactory do
     {:ok, link} =
       Ecto.build_assoc(keyword, :links)
       |> Link.changeset(link_attrs)
-      |> Repo.insert
+      |> Repo.insert()
 
     link
   end
