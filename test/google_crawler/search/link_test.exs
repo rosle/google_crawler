@@ -35,7 +35,7 @@ defmodule Googlecrawler.Search.LinkTest do
 
       refute changeset.valid?
       # TODO: Recheck the validations
-      assert %{ads_position: ["can't be blank", "is invalid"]} = errors_on(changeset)
+      assert %{ads_position: ["is invalid"]} = errors_on(changeset)
     end
   end
 end

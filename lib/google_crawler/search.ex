@@ -178,7 +178,6 @@ defmodule GoogleCrawler.Search do
     |> Repo.all()
   end
 
-  # TODO: Recheck how to document private functions
   # Create the multi to insert the links.
   # Other attributes of the link except the link itself must be specified
   defp create_keyword_link_multi(multi, _keyword, [], _attrs), do: multi

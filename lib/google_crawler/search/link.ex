@@ -26,10 +26,8 @@ defmodule GoogleCrawler.Search.Link do
   end
 
   def validate_ads_position(%Ecto.Changeset{changes: %{is_ads: true}} = changeset) do
-    case get_field(changeset, :ads_position) do
-      nil -> add_error(changeset, :ads_position, "can't be blank")
-      _ -> changeset
-    end
+    changeset
+    |> validate_required(:ads_position)
   end
 
   def validate_ads_position(changeset), do: changeset

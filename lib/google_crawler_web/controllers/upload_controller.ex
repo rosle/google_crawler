@@ -22,7 +22,6 @@ defmodule GoogleCrawlerWeb.UploadController do
     end
   end
 
-  # TODO: Trigger the scraper background worker
   defp create_and_trigger_google_search(csv_result, conn) do
     csv_result
     |> Stream.map(fn keyword_row -> List.first(keyword_row) end)
