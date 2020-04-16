@@ -3,7 +3,7 @@ defmodule GoogleCrawler.Repo.Migrations.CreateLinksAndAddLinksCountToKeyword do
 
   def change do
     alter table(:keywords) do
-      add :total_results, :integer
+      add :total_results, :bigint
       add :total_ads_links, :integer
       add :total_links, :integer
     end
