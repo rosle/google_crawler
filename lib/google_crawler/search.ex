@@ -10,7 +10,7 @@ defmodule GoogleCrawler.Search do
   alias GoogleCrawler.Search.Keyword
   alias GoogleCrawler.Search.KeywordFile
   alias GoogleCrawler.Search.Link
-  alias GoogleCrawler.Google.ScrapperResult
+  alias GoogleCrawler.Google.ScraperResult
 
   @doc """
   Returns the list of keywords belongs to the given user.
@@ -124,9 +124,9 @@ defmodule GoogleCrawler.Search do
   end
 
   @doc """
-  Update the keyword result from the scrapper result and mark the keyword as completed.
+  Update the keyword result from the scraper result and mark the keyword as completed.
   """
-  def update_keyword_result_from_scrapper(%Keyword{} = keyword, %ScrapperResult{} = result) do
+  def update_keyword_result_from_scraper(%Keyword{} = keyword, %ScraperResult{} = result) do
     keyword_changeset =
       Keyword.update_result_changeset(keyword, %{
         status: :completed,

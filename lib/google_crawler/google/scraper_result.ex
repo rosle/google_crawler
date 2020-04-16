@@ -1,4 +1,4 @@
-defmodule GoogleCrawler.Google.ScrapperResult do
+defmodule GoogleCrawler.Google.ScraperResult do
   defstruct raw_html_result: nil,
             total_results: 0,
             links: [],

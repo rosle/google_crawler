@@ -1,16 +1,16 @@
-defmodule GoogleCrawler.Google.ScrapperTest do
+defmodule GoogleCrawler.Google.ScraperTest do
   use ExUnit.Case
 
-  alias GoogleCrawler.Google.Scrapper
-  alias GoogleCrawler.Google.ScrapperResult
+  alias GoogleCrawler.Google.Scraper
+  alias GoogleCrawler.Google.ScraperResult
 
   test "scrap/1" do
     html = response_fixtures("hotels.html")
 
-    result = Scrapper.scrap(html)
+    result = Scraper.scrap(html)
     raw_html = cleanup_html(html)
 
-    assert %ScrapperResult{
+    assert %ScraperResult{
              raw_html_result: ^raw_html,
              total_results: 5_970_000_000,
              links: [

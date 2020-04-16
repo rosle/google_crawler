@@ -3,9 +3,9 @@ defmodule GoogleCrawler.SearchTest do
 
   alias GoogleCrawler.Search
   alias GoogleCrawler.Search.Keyword
-  alias GoogleCrawler.Google.ScrapperResult
+  alias GoogleCrawler.Google.ScraperResult
   alias GoogleCrawler.KeywordFactory
-  alias GoogleCrawler.ScrapperResultFactory
+  alias GoogleCrawler.ScraperResultFactory
   alias GoogleCrawler.UserFactory
 
   describe "keywords" do
@@ -75,13 +75,13 @@ defmodule GoogleCrawler.SearchTest do
       assert Repo.get_by(Keyword, keyword: keyword.keyword) != nil
     end
 
-    test "update_keyword_result_from_scrapper/2 updates the keyword results and associates the keyword links" do
+    test "update_keyword_result_from_scraper/2 updates the keyword results and associates the keyword links" do
       keyword = KeywordFactory.create()
 
-      scrapper_result =
+      scraper_result =
         struct(
-          ScrapperResult,
-          ScrapperResultFactory.build_attrs(
+          ScraperResult,
+          ScraperResultFactory.build_attrs(
             total_results: 50_000,
             total_links: 10,
             total_top_ads_links: 3,
@@ -89,7 +89,7 @@ defmodule GoogleCrawler.SearchTest do
           )
         )
 
-      Search.update_keyword_result_from_scrapper(keyword, scrapper_result)
+      Search.update_keyword_result_from_scraper(keyword, scraper_result)
 
       # Keyword result summary is updated
       assert %{
@@ -102,19 +102,19 @@ defmodule GoogleCrawler.SearchTest do
       top_ads_query = [is_ads: true, ads_position: :top]
       top_ads_links = get_link_urls(Search.list_keyword_links(keyword, top_ads_query))
       assert 3 = length(top_ads_links)
-      assert scrapper_result.top_ads_links == top_ads_links
+      assert scraper_result.top_ads_links == top_ads_links
 
       # Bottom Ads links is inserted
       bottom_ads_query = [is_ads: true, ads_position: :bottom]
       bottom_ads_links = get_link_urls(Search.list_keyword_links(keyword, bottom_ads_query))
       assert 1 = length(bottom_ads_links)
-      assert scrapper_result.bottom_ads_links == bottom_ads_links
+      assert scraper_result.bottom_ads_links == bottom_ads_links
 
       # Non-Ads links is inserted
       non_ads_query = [is_ads: false]
       links = get_link_urls(Search.list_keyword_links(keyword, non_ads_query))
       assert 10 = length(links)
-      assert scrapper_result.links == links
+      assert scraper_result.links == links
     end
   end
 

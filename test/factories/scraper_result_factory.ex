@@ -1,4 +1,4 @@
-defmodule GoogleCrawler.ScrapperResultFactory do
+defmodule GoogleCrawler.ScraperResultFactory do
   def default_attrs(total_links, total_top_ads_links, total_bottom_ads_links) do
     total_links = total_links || Enum.random(0..10)
     total_top_ads_links = total_top_ads_links || Enum.random(0..5)

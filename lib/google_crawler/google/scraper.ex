@@ -1,5 +1,5 @@
-defmodule GoogleCrawler.Google.Scrapper do
-  alias GoogleCrawler.Google.ScrapperResult
+defmodule GoogleCrawler.Google.Scraper do
+  alias GoogleCrawler.Google.ScraperResult
 
   @selectors %{
     total_results: "#result-stats",
@@ -9,7 +9,7 @@ defmodule GoogleCrawler.Google.Scrapper do
   }
 
   def scrap(html) do
-    result = %ScrapperResult{}
+    result = %ScraperResult{}
 
     {:ok, document} = Floki.parse_document(html)
 

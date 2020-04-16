@@ -1,11 +1,11 @@
 defmodule GoogleCrawler.Search.SearchKeywordTask do
   alias GoogleCrawler.Search.Keyword
-  alias GoogleCrawler.Google.Scrapper
+  alias GoogleCrawler.Google.Scraper
 
   def perform(%Keyword{} = keyword) do
     case google_api_client().search(keyword.keyword) do
       {:ok, body} ->
-        Scrapper.scrap(body)
+        Scraper.scrap(body)
 
       {:error, reason} ->
         raise "Keyword search failed: #{reason}"

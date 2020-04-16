@@ -51,7 +51,7 @@ defmodule GoogleCrawler.SearchKeywordWorker do
     {keyword, retry_count} = Map.get(state, ref)
 
     new_state =
-      case Search.update_keyword_result_from_scrapper(keyword, result) do
+      case Search.update_keyword_result_from_scraper(keyword, result) do
         {:ok, _result} ->
           # Demonitor the task and remove from the state
           Process.demonitor(ref, [:flush])
