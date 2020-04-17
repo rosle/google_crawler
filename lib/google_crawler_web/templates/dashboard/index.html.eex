@@ -1,6 +1,16 @@
-<%= render GoogleCrawlerWeb.KeywordView, "_form.html", assigns %>
+<section>
+  <%= render GoogleCrawlerWeb.KeywordView, "_form.html", assigns %>
+</section>
 <hr>
 <section>
   <h3><%= gettext("Keywords") %></h3>
-  <p><%= gettext("You don't have any keywords.") %></p>
+  <%= if length(@keywords) == 0 do %>
+    <p><%= gettext("You don't have any keywords.") %></p>
+  <% else %>
+    <ul>
+      <%= for keyword <- @keywords do %>
+        <li><%= keyword.keyword %></li>
+      <% end %>
+    </ul>
+  <% end %>
 </section>

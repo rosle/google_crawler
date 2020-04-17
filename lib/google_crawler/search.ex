@@ -10,16 +10,18 @@ defmodule GoogleCrawler.Search do
   alias GoogleCrawler.Search.KeywordFile
 
   @doc """
-  Returns the list of keywords.
+  Returns the list of keywords belongs to the given user.
 
   ## Examples
 
-      iex> list_keywords()
+      iex> list_user_keywords(user)
       [%Keyword{}, ...]
 
   """
-  def list_keywords do
-    Repo.all(Keyword)
+  def list_user_keywords(user) do
+    Keyword
+    |> where(user_id: ^user.id)
+    |> Repo.all()
   end
 
   @doc """
@@ -43,15 +45,15 @@ defmodule GoogleCrawler.Search do
 
   ## Examples
 
-      iex> create_keyword(%{field: value})
+      iex> create_keyword(%{field: value}, %User{})
       {:ok, %Keyword{}}
 
-      iex> create_keyword(%{field: bad_value})
+      iex> create_keyword(%{field: bad_value}, %User{})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_keyword(attrs \\ %{}) do
-    %Keyword{}
+  def create_keyword(attrs \\ %{}, user) do
+    Ecto.build_assoc(user, :keywords)
     |> Keyword.changeset(attrs)
     |> Repo.insert()
   end
