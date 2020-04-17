@@ -16,7 +16,7 @@ defmodule GoogleCrawlerWeb.RegistrationController do
         conn
         |> put_flash(:info, gettext("You have signed up successfully!"))
         # TODO: Change to login path
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> redirect(to: Routes.dashboard_path(conn, :index))
 
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)

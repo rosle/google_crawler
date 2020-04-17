@@ -2,11 +2,10 @@ defmodule GoogleCrawler.AccountsTest do
   use GoogleCrawler.DataCase
 
   alias GoogleCrawler.Accounts
+  alias GoogleCrawler.Accounts.User
   alias GoogleCrawler.UserFactory
 
   describe "users" do
-    alias GoogleCrawler.Accounts.User
-
     test "get_user/1 returns the user with given id" do
       user = UserFactory.create()
 

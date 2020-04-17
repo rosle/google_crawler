@@ -1,0 +1,6 @@
+<%= render GoogleCrawlerWeb.KeywordView, "_form.html", assigns %>
+<hr>
+<section>
+  <h3><%= gettext("Keywords") %></h3>
+  <p><%= gettext("You don't have any keywords.") %></p>
+</section>

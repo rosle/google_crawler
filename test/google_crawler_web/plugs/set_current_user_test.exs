@@ -8,8 +8,7 @@ defmodule GoogleCrawlerWeb.SetCurrentUserTest do
     user = UserFactory.create()
 
     conn =
-      build_conn()
-      |> init_test_session(current_user_id: user.id)
+      build_authenticated_conn(user)
       |> call(%{})
 
     assert conn.assigns.current_user.id == user.id

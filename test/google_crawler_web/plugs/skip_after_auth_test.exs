@@ -4,18 +4,16 @@ defmodule GoogleCrawlerWeb.SkipAfterAuthTest do
 
   alias GoogleCrawler.UserFactory
 
-  test "redirects to the index page if the user has already logged in" do
+  test "redirects to the user dashboard if the user has already logged in" do
     user = UserFactory.create()
 
     conn =
-      build_conn()
-      |> init_test_session(current_user_id: user.id)
+      build_authenticated_conn(user)
       |> fetch_flash
-      |> assign(:user_signed_in?, true)
       |> call(%{})
 
     assert conn.halted
-    assert redirected_to(conn) == Routes.page_path(conn, :index)
+    assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
     assert get_flash(conn, :info) == "You are already signed in."
   end
 

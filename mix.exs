@@ -44,7 +44,8 @@ defmodule GoogleCrawler.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:bcrypt_elixir, "~> 2.0"},
-      {:faker_elixir_octopus, "~> 1.0.0", only: [:dev, :test]}
+      {:faker_elixir_octopus, "~> 1.0.0", only: [:dev, :test]},
+      {:csv, "~> 2.3"}
     ]
   end
 
