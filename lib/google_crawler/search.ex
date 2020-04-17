@@ -29,11 +29,11 @@ defmodule GoogleCrawler.Search do
 
   ## Examples
 
-      iex> get_keyword!(123)
+      iex> get_keyword(123)
       %Keyword{}
 
-      iex> get_keyword!(456)
-      ** (Ecto.NoResultsError)
+      iex> get_keyword(456)
+      nil
 
   """
   def get_keyword(id), do: Repo.get(Keyword, id)

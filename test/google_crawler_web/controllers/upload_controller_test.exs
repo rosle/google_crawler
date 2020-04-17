@@ -1,6 +1,8 @@
 defmodule GoogleCrawlerWeb.UploadControllerTest do
   use GoogleCrawlerWeb.ConnCase
 
+  import GoogleCrawler.FixtureHelper
+
   alias GoogleCrawler.UserFactory
 
   test "create/2 renders csv content as text if the keyword file is valid", %{conn: conn} do
@@ -36,15 +38,5 @@ defmodule GoogleCrawlerWeb.UploadControllerTest do
 
     assert redirected_to(conn) == Routes.dashboard_path(conn, :index)
     assert get_flash(conn, :error) == "Invalid file, please select again."
-  end
-
-  defp upload_file_fixture(path) do
-    path = Path.join(["test/fixtures", path])
-
-    %Plug.Upload{
-      content_type: MIME.from_path(path),
-      filename: Path.basename(path),
-      path: path
-    }
   end
 end
